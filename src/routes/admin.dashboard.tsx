@@ -6,7 +6,7 @@ import { AdminPageHeader } from "@/components/admin/wp-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAdmin, withImageFallback } from "@/lib/admin-store";
-import { formatCurrency } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 
 export const Route = createFileRoute("/admin/dashboard")({
   component: AllPostsPage,
@@ -109,7 +109,7 @@ function AllPostsPage() {
                     <div>
                       <p className="font-semibold text-foreground">{post.title}</p>
                       <p className="text-xs text-muted-foreground">
-                        {post.address} · {formatCurrency(post.price)} · {post.beds} bd / {post.baths} ba /{" "}
+                        {post.address} · {formatPrice(post.price)} · {post.beds} bd / {post.baths} ba /{" "}
                         {post.sqft.toLocaleString("en-US")} sqft
                       </p>
                       <p className="mt-1 text-xs text-muted-foreground">
