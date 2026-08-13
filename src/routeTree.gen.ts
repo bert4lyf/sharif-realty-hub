@@ -29,6 +29,7 @@ import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminInvoicesRouteImport } from './routes/admin.invoices'
 import { Route as AdminMediaRouteImport } from './routes/admin.media'
 import { Route as AdminPagesRouteImport } from './routes/admin.pages'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminTagsRouteImport } from './routes/admin.tags'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
 import { Route as PropertiesIdRouteImport } from './routes/properties.$id'
@@ -135,6 +136,11 @@ const AdminPagesRoute = AdminPagesRouteImport.update({
   path: '/pages',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminTagsRoute = AdminTagsRouteImport.update({
   id: '/tags',
   path: '/tags',
@@ -186,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/admin/invoices': typeof AdminInvoicesRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/pages': typeof AdminPagesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -212,6 +219,7 @@ export interface FileRoutesByTo {
   '/admin/invoices': typeof AdminInvoicesRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/pages': typeof AdminPagesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin': typeof AdminIndexRoute
@@ -241,6 +249,7 @@ export interface FileRoutesById {
   '/admin/invoices': typeof AdminInvoicesRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/pages': typeof AdminPagesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -270,6 +279,7 @@ export interface FileRouteTypes {
     | '/admin/invoices'
     | '/admin/media'
     | '/admin/pages'
+    | '/admin/settings'
     | '/admin/tags'
     | '/properties/$id'
     | '/admin/'
@@ -296,6 +306,7 @@ export interface FileRouteTypes {
     | '/admin/invoices'
     | '/admin/media'
     | '/admin/pages'
+    | '/admin/settings'
     | '/admin/tags'
     | '/properties/$id'
     | '/admin'
@@ -324,6 +335,7 @@ export interface FileRouteTypes {
     | '/admin/invoices'
     | '/admin/media'
     | '/admin/pages'
+    | '/admin/settings'
     | '/admin/tags'
     | '/properties/$id'
     | '/admin/'
@@ -492,6 +504,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/tags': {
       id: '/admin/tags'
       path: '/tags'
@@ -556,6 +575,7 @@ interface AdminRouteChildren {
   AdminInvoicesRoute: typeof AdminInvoicesRoute
   AdminMediaRoute: typeof AdminMediaRoute
   AdminPagesRoute: typeof AdminPagesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTagsRoute: typeof AdminTagsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminPostsNewRoute: typeof AdminPostsNewRoute
@@ -570,6 +590,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminInvoicesRoute: AdminInvoicesRoute,
   AdminMediaRoute: AdminMediaRoute,
   AdminPagesRoute: AdminPagesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminTagsRoute: AdminTagsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminPostsNewRoute: AdminPostsNewRoute,

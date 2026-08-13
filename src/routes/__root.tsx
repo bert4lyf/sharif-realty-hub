@@ -7,6 +7,7 @@ import {
   HeadContent,
   Scripts,
   ClientOnly,
+  useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -20,6 +21,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { NotFound } from "@/components/not-found";
 import { localBusinessJsonLd } from "@/components/jsonld";
+import { AdminProvider } from "@/lib/admin-store";
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
@@ -110,18 +112,28 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const isBackOffice = pathname.startsWith("/admin") || pathname === "/login";
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col pb-16 md:pb-0">
-        <SiteHeader />
-        <main className="flex-1">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <SiteFooter />
-        <StickyMobileCta />
-      </div>
+      <AdminProvider>
+        {isBackOffice ? (
+          <div className="min-h-screen bg-background">
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </div>
+        ) : (
+          <div className="flex min-h-screen flex-col pb-16 md:pb-0">
+            <SiteHeader />
+            <main className="flex-1">
+              <Outlet />
+            </main>
+            <SiteFooter />
+            <StickyMobileCta />
+          </div>
+        )}
+      </AdminProvider>
       <Toaster position="top-center" />
       <ClientOnly fallback={null}>
         <Analytics />
