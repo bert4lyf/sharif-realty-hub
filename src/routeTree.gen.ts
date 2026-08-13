@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as FaqsRouteImport } from './routes/faqs'
@@ -37,6 +38,11 @@ const R404Route = R404RouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -104,6 +110,7 @@ const AuthenticatedAdminDashboardRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
@@ -131,13 +139,13 @@ export interface FileRoutesByTo {
   '/properties/$id': typeof PropertiesIdRoute
   '/properties': typeof PropertiesIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/404': typeof R404Route
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
@@ -156,6 +164,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/404'
+    | '/admin'
     | '/auth'
     | '/case-studies'
     | '/faqs'
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/404'
+    | '/admin'
     | '/auth'
     | '/case-studies'
     | '/faqs'
@@ -183,12 +193,12 @@ export interface FileRouteTypes {
     | '/properties/$id'
     | '/properties'
     | '/admin/dashboard'
-    | '/admin'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/404'
+    | '/admin'
     | '/auth'
     | '/case-studies'
     | '/faqs'
@@ -207,6 +217,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   R404Route: typeof R404Route
+  AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   CaseStudiesRoute: typeof CaseStudiesRoute
   FaqsRoute: typeof FaqsRoute
@@ -240,6 +251,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -346,6 +364,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   R404Route: R404Route,
+  AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   CaseStudiesRoute: CaseStudiesRoute,
   FaqsRoute: FaqsRoute,
