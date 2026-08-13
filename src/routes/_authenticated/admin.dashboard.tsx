@@ -48,7 +48,7 @@ export const Route = createFileRoute("/_authenticated/admin/dashboard")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: AdminDashboard;
+  component: AdminDashboard,
 });
 
 function AdminDashboard() {
