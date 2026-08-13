@@ -14,16 +14,358 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      case_studies: {
+        Row: {
+          address: string
+          client_name: string | null
+          created_at: string
+          days_on_market: number | null
+          id: string
+          image_url: string | null
+          is_published: boolean
+          percent_of_asking: number | null
+          sale_price: number | null
+          slug: string
+          story: string
+          summary: string
+          title: string
+        }
+        Insert: {
+          address?: string
+          client_name?: string | null
+          created_at?: string
+          days_on_market?: number | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          percent_of_asking?: number | null
+          sale_price?: number | null
+          slug: string
+          story?: string
+          summary?: string
+          title: string
+        }
+        Update: {
+          address?: string
+          client_name?: string | null
+          created_at?: string
+          days_on_market?: number | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          percent_of_asking?: number | null
+          sale_price?: number | null
+          slug?: string
+          story?: string
+          summary?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      faqs: {
+        Row: {
+          answer: string
+          category: string
+          created_at: string
+          id: string
+          is_published: boolean
+          question: string
+          sort_order: number
+        }
+        Insert: {
+          answer: string
+          category?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          question: string
+          sort_order?: number
+        }
+        Update: {
+          answer?: string
+          category?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          question?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          assigned_to: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string | null
+          name: string
+          phone: string | null
+          property_id: string | null
+          source: string
+          status: Database["public"]["Enums"]["lead_status"]
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          phone?: string | null
+          property_id?: string | null
+          source?: string
+          status?: Database["public"]["Enums"]["lead_status"]
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          phone?: string | null
+          property_id?: string | null
+          source?: string
+          status?: Database["public"]["Enums"]["lead_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      properties: {
+        Row: {
+          address: string
+          baths: number
+          beds: number
+          city: string
+          created_at: string
+          description: string
+          features: string[]
+          id: string
+          images: string[]
+          is_archived: boolean
+          is_featured: boolean
+          latitude: number | null
+          listing_type: Database["public"]["Enums"]["listing_type"]
+          longitude: number | null
+          price: number
+          slug: string
+          sqft: number
+          state: string
+          status: Database["public"]["Enums"]["property_status"]
+          title: string
+          updated_at: string
+          year_built: number | null
+          zip: string
+        }
+        Insert: {
+          address?: string
+          baths?: number
+          beds?: number
+          city?: string
+          created_at?: string
+          description?: string
+          features?: string[]
+          id?: string
+          images?: string[]
+          is_archived?: boolean
+          is_featured?: boolean
+          latitude?: number | null
+          listing_type?: Database["public"]["Enums"]["listing_type"]
+          longitude?: number | null
+          price?: number
+          slug: string
+          sqft?: number
+          state?: string
+          status?: Database["public"]["Enums"]["property_status"]
+          title: string
+          updated_at?: string
+          year_built?: number | null
+          zip?: string
+        }
+        Update: {
+          address?: string
+          baths?: number
+          beds?: number
+          city?: string
+          created_at?: string
+          description?: string
+          features?: string[]
+          id?: string
+          images?: string[]
+          is_archived?: boolean
+          is_featured?: boolean
+          latitude?: number | null
+          listing_type?: Database["public"]["Enums"]["listing_type"]
+          longitude?: number | null
+          price?: number
+          slug?: string
+          sqft?: number
+          state?: string
+          status?: Database["public"]["Enums"]["property_status"]
+          title?: string
+          updated_at?: string
+          year_built?: number | null
+          zip?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          author_location: string | null
+          author_name: string
+          avatar_url: string | null
+          created_at: string
+          id: string
+          is_approved: boolean
+          quote: string
+          rating: number
+        }
+        Insert: {
+          author_location?: string | null
+          author_name: string
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          quote: string
+          rating?: number
+        }
+        Update: {
+          author_location?: string | null
+          author_name?: string
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          quote?: string
+          rating?: number
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          email: string
+          ga4_measurement_id: string | null
+          id: number
+          latitude: number
+          longitude: number
+          maps_api_key: string | null
+          office_address: string
+          office_hours: string
+          phone: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          email?: string
+          ga4_measurement_id?: string | null
+          id?: number
+          latitude?: number
+          longitude?: number
+          maps_api_key?: string | null
+          office_address?: string
+          office_hours?: string
+          phone?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Update: {
+          email?: string
+          ga4_measurement_id?: string | null
+          id?: number
+          latitude?: number
+          longitude?: number
+          maps_api_key?: string | null
+          office_address?: string
+          office_hours?: string
+          phone?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "super_admin" | "admin" | "agent"
+      lead_status: "new" | "contacted" | "in_contract" | "closed"
+      listing_type: "buy" | "rent" | "commercial"
+      property_status: "for_sale" | "pending" | "sold" | "for_rent" | "rented"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +492,11 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["super_admin", "admin", "agent"],
+      lead_status: ["new", "contacted", "in_contract", "closed"],
+      listing_type: ["buy", "rent", "commercial"],
+      property_status: ["for_sale", "pending", "sold", "for_rent", "rented"],
+    },
   },
 } as const
