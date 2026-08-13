@@ -24,6 +24,7 @@ import { Route as ThankYouRouteImport } from './routes/thank-you'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminTagsRouteImport } from './routes/admin.tags'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
 import { Route as PropertiesIdRouteImport } from './routes/properties.$id'
 import { Route as AuthenticatedStaffDashboardRouteImport } from './routes/_authenticated/staff.dashboard'
@@ -104,6 +105,11 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminTagsRoute = AdminTagsRouteImport.update({
+  id: '/tags',
+  path: '/tags',
+  getParentRoute: () => AdminRoute,
+} as any)
 const PropertiesIndexRoute = PropertiesIndexRouteImport.update({
   id: '/properties/',
   path: '/properties/',
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/thank-you': typeof ThankYouRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin/': typeof AdminIndexRoute
   '/properties/': typeof PropertiesIndexRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/thank-you': typeof ThankYouRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin': typeof AdminIndexRoute
   '/properties': typeof PropertiesIndexRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/thank-you': typeof ThankYouRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin/': typeof AdminIndexRoute
   '/properties/': typeof PropertiesIndexRoute
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/tags'
     | '/properties/$id'
     | '/admin/'
     | '/properties/'
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/tags'
     | '/properties/$id'
     | '/admin'
     | '/properties'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/tags'
     | '/properties/$id'
     | '/admin/'
     | '/properties/'
@@ -385,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/tags': {
+      id: '/admin/tags'
+      path: '/tags'
+      fullPath: '/admin/tags'
+      preLoaderRoute: typeof AdminTagsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/properties/': {
       id: '/properties/'
       path: '/properties'
@@ -437,6 +456,7 @@ const AuthenticatedRouteRouteWithChildren =
 interface AdminRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminTagsRoute: typeof AdminTagsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminPostsNewRoute: typeof AdminPostsNewRoute
   AdminPostsIdEditRoute: typeof AdminPostsIdEditRoute
@@ -445,6 +465,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminTagsRoute: AdminTagsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminPostsNewRoute: AdminPostsNewRoute,
   AdminPostsIdEditRoute: AdminPostsIdEditRoute,
