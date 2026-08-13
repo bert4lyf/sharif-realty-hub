@@ -24,6 +24,7 @@ import { Route as ThankYouRouteImport } from './routes/thank-you'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminMediaRouteImport } from './routes/admin.media'
 import { Route as AdminTagsRouteImport } from './routes/admin.tags'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
 import { Route as PropertiesIdRouteImport } from './routes/properties.$id'
@@ -105,6 +106,11 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminTagsRoute = AdminTagsRouteImport.update({
   id: '/tags',
   path: '/tags',
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/thank-you': typeof ThankYouRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/media': typeof AdminMediaRoute
   '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/thank-you': typeof ThankYouRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/media': typeof AdminMediaRoute
   '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin': typeof AdminIndexRoute
@@ -196,6 +204,7 @@ export interface FileRoutesById {
   '/thank-you': typeof ThankYouRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/media': typeof AdminMediaRoute
   '/admin/tags': typeof AdminTagsRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin/': typeof AdminIndexRoute
@@ -220,6 +229,7 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/media'
     | '/admin/tags'
     | '/properties/$id'
     | '/admin/'
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/media'
     | '/admin/tags'
     | '/properties/$id'
     | '/admin'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/media'
     | '/admin/tags'
     | '/properties/$id'
     | '/admin/'
@@ -397,6 +409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/tags': {
       id: '/admin/tags'
       path: '/tags'
@@ -456,6 +475,7 @@ const AuthenticatedRouteRouteWithChildren =
 interface AdminRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminMediaRoute: typeof AdminMediaRoute
   AdminTagsRoute: typeof AdminTagsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminPostsNewRoute: typeof AdminPostsNewRoute
@@ -465,6 +485,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminMediaRoute: AdminMediaRoute,
   AdminTagsRoute: AdminTagsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminPostsNewRoute: AdminPostsNewRoute,
