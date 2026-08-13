@@ -21,10 +21,10 @@ import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ThankYouRouteImport } from './routes/thank-you'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
 import { Route as PropertiesIdRouteImport } from './routes/properties.$id'
-import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
-import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
+import { Route as AuthenticatedStaffDashboardRouteImport } from './routes/_authenticated/staff.dashboard'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -85,6 +85,11 @@ const ThankYouRoute = ThankYouRouteImport.update({
   path: '/thank-you',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const PropertiesIndexRoute = PropertiesIndexRouteImport.update({
   id: '/properties/',
   path: '/properties/',
@@ -95,22 +100,17 @@ const PropertiesIdRoute = PropertiesIdRouteImport.update({
   path: '/properties/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminDashboardRoute =
-  AuthenticatedAdminDashboardRouteImport.update({
-    id: '/admin/dashboard',
-    path: '/admin/dashboard',
+const AuthenticatedStaffDashboardRoute =
+  AuthenticatedStaffDashboardRouteImport.update({
+    id: '/staff/dashboard',
+    path: '/staff/dashboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
@@ -120,14 +120,13 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/properties/$id': typeof PropertiesIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/properties/': typeof PropertiesIndexRoute
-  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/staff/dashboard': typeof AuthenticatedStaffDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
-  '/admin': typeof AuthenticatedAdminIndexRoute
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
@@ -137,15 +136,16 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/properties/$id': typeof PropertiesIdRoute
+  '/admin': typeof AdminIndexRoute
   '/properties': typeof PropertiesIndexRoute
-  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/staff/dashboard': typeof AuthenticatedStaffDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/404': typeof R404Route
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
@@ -155,9 +155,9 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/properties/$id': typeof PropertiesIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/properties/': typeof PropertiesIndexRoute
-  '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/staff/dashboard': typeof AuthenticatedStaffDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -174,14 +174,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/properties/$id'
-    | '/properties/'
-    | '/admin/dashboard'
     | '/admin/'
+    | '/properties/'
+    | '/staff/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/404'
-    | '/admin'
     | '/auth'
     | '/case-studies'
     | '/faqs'
@@ -191,8 +190,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/properties/$id'
+    | '/admin'
     | '/properties'
-    | '/admin/dashboard'
+    | '/staff/dashboard'
   id:
     | '__root__'
     | '/'
@@ -208,16 +208,16 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/properties/$id'
+    | '/admin/'
     | '/properties/'
-    | '/_authenticated/admin/dashboard'
-    | '/_authenticated/admin/'
+    | '/_authenticated/staff/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   R404Route: typeof R404Route
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   CaseStudiesRoute: typeof CaseStudiesRoute
   FaqsRoute: typeof FaqsRoute
@@ -316,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ThankYouRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/properties/': {
       id: '/properties/'
       path: '/properties'
@@ -330,41 +337,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PropertiesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/': {
-      id: '/_authenticated/admin/'
-      path: '/admin'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/dashboard': {
-      id: '/_authenticated/admin/dashboard'
-      path: '/admin/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
+    '/_authenticated/staff/dashboard': {
+      id: '/_authenticated/staff/dashboard'
+      path: '/staff/dashboard'
+      fullPath: '/staff/dashboard'
+      preLoaderRoute: typeof AuthenticatedStaffDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
-  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedStaffDashboardRoute: typeof AuthenticatedStaffDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
-  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedStaffDashboardRoute: AuthenticatedStaffDashboardRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   R404Route: R404Route,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   CaseStudiesRoute: CaseStudiesRoute,
   FaqsRoute: FaqsRoute,
