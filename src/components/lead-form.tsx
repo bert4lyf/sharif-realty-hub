@@ -68,7 +68,7 @@ export function LeadForm({ source = "website", propertyId = null, defaultMessage
         <div className="space-y-1.5">
           <Label htmlFor="lead-name">Full name</Label>
           <Input id="lead-name" name="name" maxLength={100} autoComplete="name" required />
-          {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
+          {errors["name"] && <p className="text-xs text-destructive">{errors["name"]}</p>}
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="lead-email">Email</Label>
@@ -80,7 +80,7 @@ export function LeadForm({ source = "website", propertyId = null, defaultMessage
             autoComplete="email"
             required
           />
-          {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+          {errors["email"] && <p className="text-xs text-destructive">{errors["email"]}</p>}
         </div>
       </div>
 
@@ -99,7 +99,7 @@ export function LeadForm({ source = "website", propertyId = null, defaultMessage
           defaultValue={defaultMessage}
           placeholder="Tell us about the property, timeline, or neighborhood you have in mind."
         />
-        {errors.message && <p className="text-xs text-destructive">{errors.message}</p>}
+        {errors["message"] && <p className="text-xs text-destructive">{errors["message"]}</p>}
       </div>
 
       <Button type="submit" disabled={pending} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
