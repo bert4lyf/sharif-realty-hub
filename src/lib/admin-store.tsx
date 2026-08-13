@@ -255,12 +255,13 @@ export function useAdmin() {
 
 export function withImageFallback(event: React.SyntheticEvent<HTMLImageElement>) {
   const img = event.currentTarget;
-  if (img.dataset.fallbackStep === "2") return;
-  if (img.dataset.fallbackStep === "1") {
-    img.dataset.fallbackStep = "2";
+  const step = img.dataset['fallbackStep'];
+  if (step === "2") return;
+  if (step === "1") {
+    img.dataset['fallbackStep'] = "2";
     img.src = FALLBACK_IMAGE_ALT;
     return;
   }
-  img.dataset.fallbackStep = "1";
+  img.dataset['fallbackStep'] = "1";
   img.src = FALLBACK_IMAGE;
 }
