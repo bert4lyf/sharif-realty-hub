@@ -57,16 +57,16 @@ function AuthPage() {
         const { error: signUpError } = await supabase.auth.signUp({
           email: parsed.data.email,
           password: parsed.data.password,
-          options: { emailRedirectTo: `${window.location.origin}/admin/dashboard` },
+          options: { emailRedirectTo: `${window.location.origin}/staff/dashboard` },
         });
         if (signUpError) throw signUpError;
         toast.success("Account created. An administrator must grant you access.");
-        await navigate({ to: "/admin/dashboard" });
+        await navigate({ to: "/staff/dashboard" });
         return;
       }
       const { error: signInError } = await supabase.auth.signInWithPassword(parsed.data);
       if (signInError) throw signInError;
-      await navigate({ to: "/admin/dashboard" });
+      await navigate({ to: "/staff/dashboard" });
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Sign in failed");
     } finally {
@@ -83,7 +83,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    await navigate({ to: "/admin/dashboard" });
+    await navigate({ to: "/staff/dashboard" });
   }
 
   return (

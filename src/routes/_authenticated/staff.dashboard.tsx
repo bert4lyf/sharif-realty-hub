@@ -36,7 +36,7 @@ import { LEAD_STATUS_LABELS, STATUS_LABELS, formatDate, formatPrice } from "@/li
 import { caseStudyInputSchema, faqInputSchema, settingsInputSchema } from "@/lib/schemas";
 import type { Property } from "@/lib/types";
 
-export const Route = createFileRoute("/_authenticated/admin/dashboard")({
+export const Route = createFileRoute("/_authenticated/staff/dashboard")({
   head: () => ({
     meta: [
       { title: "Admin Dashboard | Sharif Realty" },
