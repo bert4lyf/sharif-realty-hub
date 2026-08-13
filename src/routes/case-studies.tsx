@@ -69,15 +69,17 @@ function CaseStudiesPage() {
               <div>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold text-accent-strong">
                   <TrendingUp className="size-3.5" aria-hidden="true" />
-                  {study.metric_label}
+                  {study.days_on_market !== null && study.percent_of_asking !== null
+                    ? `Sold in ${study.days_on_market} days for ${Number(study.percent_of_asking)}% of asking`
+                    : "Recent Sharif Realty closing"}
                 </span>
                 <h2 className="mt-4 font-display text-2xl">{study.title}</h2>
                 <p className="mt-1 text-sm text-muted-foreground">{study.address}</p>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{study.summary}</p>
-                {study.client_quote && (
+                {study.story && (
                   <blockquote className="mt-5 border-l-2 border-accent pl-4 text-sm italic text-foreground">
                     <Quote className="mb-1 size-4 text-accent" aria-hidden="true" />
-                    {study.client_quote}
+                    {study.story}
                     {study.client_name && (
                       <footer className="mt-2 text-xs font-semibold not-italic text-muted-foreground">
                         — {study.client_name}
@@ -87,10 +89,10 @@ function CaseStudiesPage() {
                 )}
               </div>
               <dl className="grid grid-cols-2 gap-4 self-start rounded-lg bg-muted/60 p-5 md:grid-cols-1">
-                {study.sold_price !== null && (
+                {study.sale_price !== null && (
                   <div>
                     <dt className="text-xs text-muted-foreground">Sold price</dt>
-                    <dd className="font-display text-xl">{formatPrice(Number(study.sold_price))}</dd>
+                    <dd className="font-display text-xl">{formatPrice(Number(study.sale_price))}</dd>
                   </div>
                 )}
                 {study.days_on_market !== null && (

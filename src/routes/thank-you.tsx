@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2, MessageCircle, Phone, Timer } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Button } from "@/components/ui/button";
-import { SITE, whatsappHref } from "@/lib/site";
+import { FULL_ADDRESS, SITE, whatsappHref } from "@/lib/site";
 import { track } from "@/lib/analytics";
 
 export const Route = createFileRoute("/thank-you")({
@@ -42,7 +42,7 @@ const STEPS = [
   },
 ];
 
-export default function ThankYouPage() {
+function ThankYouPage() {
   return (
     <>
       <Breadcrumbs items={[{ label: "Thank You" }]} />
@@ -98,7 +98,7 @@ export default function ThankYouPage() {
         </div>
 
         <p className="mt-8 text-sm text-muted-foreground">
-          Office: {SITE.address}, {SITE.city}, {SITE.state} {SITE.zip} · {SITE.hours} · Email{" "}
+          Office: {FULL_ADDRESS} · {SITE.hours} · Email{" "}
           <a href={`mailto:${SITE.email}`} className="font-semibold text-accent hover:underline">
             {SITE.email}
           </a>
