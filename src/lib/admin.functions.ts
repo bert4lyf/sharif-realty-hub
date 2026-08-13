@@ -78,8 +78,10 @@ export const setPropertyFlags = createServerFn({ method: "POST" })
       .parse(data),
   )
   .handler(async ({ data, context }) => {
-    const { id, ...values } = data;
-    const { error } = await context.supabase.from("properties").update(values).eq("id", id);
+    const values: { is_featured?: boolean; is_archived?: boolean } = {};
+    if (data.is_featured !== undefined) values.is_featured = data.is_featured;
+    if (data.is_archived !== undefined) values.is_archived = data.is_archived;
+    const { error } = await context.supabase.from("properties").update(values).eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -96,8 +98,10 @@ export const updateLead = createServerFn({ method: "POST" })
       .parse(data),
   )
   .handler(async ({ data, context }) => {
-    const { id, ...values } = data;
-    const { error } = await context.supabase.from("leads").update(values).eq("id", id);
+    const values: { status?: "new" | "contacted" | "in_contract" | "closed"; assigned_to?: string | null } = {};
+    if (data.status !== undefined) values.status = data.status;
+    if (data.assigned_to !== undefined) values.assigned_to = data.assigned_to;
+    const { error } = await context.supabase.from("leads").update(values).eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
   });

@@ -6,7 +6,7 @@ export const leadSchema = z.object({
   phone: z.string().trim().max(40).optional().or(z.literal("")),
   message: z.string().trim().max(1500).optional().or(z.literal("")),
   source: z.string().trim().max(60).default("website"),
-  propertyId: z.string().uuid().optional().nullable(),
+  propertyId: z.string().uuid().nullable().default(null),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
@@ -43,8 +43,8 @@ export const propertyInputSchema = z.object({
   beds: z.number().int().min(0).max(30),
   baths: z.number().min(0).max(30),
   sqft: z.number().int().min(0).max(200000),
-  latitude: z.number().min(-90).max(90).nullable().optional(),
-  longitude: z.number().min(-180).max(180).nullable().optional(),
+  latitude: z.number().min(-90).max(90).nullable().default(null),
+  longitude: z.number().min(-180).max(180).nullable().default(null),
   images: z.array(z.string().url().max(600)).max(12).default([]),
   features: z.array(z.string().trim().max(80)).max(20).default([]),
   is_featured: z.boolean().default(false),
@@ -74,17 +74,17 @@ export const caseStudyInputSchema = z.object({
   address: z.string().trim().max(200).default(""),
   summary: z.string().trim().max(600).default(""),
   story: z.string().trim().max(4000).default(""),
-  client_name: z.string().trim().max(120).optional().nullable(),
-  days_on_market: z.number().int().min(0).max(3650).nullable().optional(),
-  percent_of_asking: z.number().min(0).max(300).nullable().optional(),
-  sale_price: z.number().min(0).nullable().optional(),
-  image_url: z.string().url().max(600).nullable().optional(),
+  client_name: z.string().trim().max(120).nullable().default(null),
+  days_on_market: z.number().int().min(0).max(3650).nullable().default(null),
+  percent_of_asking: z.number().min(0).max(300).nullable().default(null),
+  sale_price: z.number().min(0).nullable().default(null),
+  image_url: z.string().url().max(600).nullable().default(null),
   is_published: z.boolean().default(true),
 });
 
 export const settingsInputSchema = z.object({
-  ga4_measurement_id: z.string().trim().max(40).nullable().optional(),
-  maps_api_key: z.string().trim().max(200).nullable().optional(),
+  ga4_measurement_id: z.string().trim().max(40).nullable().default(null),
+  maps_api_key: z.string().trim().max(200).nullable().default(null),
   phone: z.string().trim().max(40),
   whatsapp: z.string().trim().max(40),
   email: z.string().trim().email().max(255),
