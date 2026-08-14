@@ -64,7 +64,8 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  /* Sharp, architectural corners — near-square by design. */
+  --radius: 0.25rem;
 
   /* #0F172A dark slate */
   --slate-deep: oklch(0.208 0.0398 265.7);
