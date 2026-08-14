@@ -18,7 +18,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-primary text-primary-foreground">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
         <Link to="/" className="flex items-center gap-2.5" aria-label={`${SITE.name} home`}>
-          <span className="flex size-9 items-center justify-center rounded-sm bg-accent text-accent-foreground">
+          <span className="flex size-9 items-center justify-center bg-accent text-accent-foreground">
             <Building2 className="size-5" aria-hidden="true" />
           </span>
           <span className="leading-tight">
@@ -32,7 +32,7 @@ export function SiteHeader() {
             <Link
               key={item.to}
               to={item.to}
-              className="text-sm font-medium text-primary-foreground/80 transition-colors hover:text-accent"
+              className="link-underline text-xs font-bold uppercase tracking-widest text-primary-foreground/80 transition-colors hover:text-accent"
               activeProps={{ className: "text-accent" }}
             >
               {item.label}
@@ -47,7 +47,7 @@ export function SiteHeader() {
               {SITE.phone}
             </a>
           </Button>
-          <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button asChild className="bg-accent text-xs font-bold uppercase tracking-widest text-accent-foreground hover:bg-accent/90">
             <Link to="/properties">Browse Listings</Link>
           </Button>
         </div>
