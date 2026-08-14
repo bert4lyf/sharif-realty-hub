@@ -17,7 +17,7 @@ export function Testimonials({ reviews }: { reviews: Review[] }) {
       <CarouselContent>
         {reviews.map((review) => (
           <CarouselItem key={review.id} className="sm:basis-1/2 lg:basis-1/3">
-            <figure className="flex h-full flex-col justify-between gap-5 rounded-xl border border-border bg-card p-6">
+            <figure className="flex h-full flex-col justify-between gap-5 rounded-sm border border-border bg-card p-6">
               <div className="space-y-4">
                 <div className="flex gap-0.5" aria-label={`${review.rating} out of 5 stars`}>
                   {Array.from({ length: 5 }).map((_, index) => (

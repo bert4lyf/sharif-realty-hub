@@ -17,7 +17,7 @@ export function PropertyCard({ property }: { property: Property }) {
   const alt = `${property.title} — ${property.address}, ${property.city}, ${property.state}`;
 
   return (
-    <article className="card-lift group overflow-hidden rounded-xl border border-border bg-card">
+    <article className="card-lift group overflow-hidden rounded-sm border border-border bg-card">
       <Link
         to="/properties/$id"
         params={{ id: property.slug }}
@@ -40,7 +40,7 @@ export function PropertyCard({ property }: { property: Property }) {
             </div>
           )}
           <Badge
-            className={`absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${STATUS_STYLES[property.status] ?? ""}`}
+            className={`absolute left-3 top-3 rounded-sm px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${STATUS_STYLES[property.status] ?? ""}`}
           >
             {STATUS_LABELS[property.status]}
           </Badge>

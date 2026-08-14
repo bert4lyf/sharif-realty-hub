@@ -94,7 +94,7 @@ function FaqsPage() {
           </div>
 
           <aside id="request-info" className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
-            <div className="rounded-xl border border-border bg-card p-6">
+            <div className="rounded-sm border border-border bg-card p-6">
               <h2 className="font-display text-xl">Still have a question?</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Ask us directly — we answer within 15 minutes.

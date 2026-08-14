@@ -18,7 +18,7 @@ function PagesPage() {
   return (
     <>
       <AdminPageHeader title="Pages" description="Static site content published on sharifrealty.com." />
-      <div className="overflow-x-auto rounded-md border border-border bg-card">
+      <div className="overflow-x-auto rounded-sm border border-border bg-card">
         <table className="w-full min-w-[640px] text-sm">
           <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <tr>

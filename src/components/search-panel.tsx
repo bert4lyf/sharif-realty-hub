@@ -70,8 +70,8 @@ export function SearchPanel({
       onSubmit={submit}
       className={
         isHero
-          ? "space-y-5 rounded-2xl border border-border/40 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-6"
-          : "space-y-5 rounded-xl border border-border bg-card p-5"
+          ? "space-y-5 border border-border/30 bg-card/95 p-5 shadow-[0_24px_60px_-30px_rgba(15,23,42,0.6)] backdrop-blur sm:p-6"
+          : "space-y-5 border border-border bg-card p-5"
       }
     >
       <div className="flex flex-wrap gap-2" role="group" aria-label="Property type">
@@ -81,10 +81,10 @@ export function SearchPanel({
             type="button"
             aria-pressed={values.type === type.value}
             onClick={() => setValues((v) => ({ ...v, type: type.value }))}
-            className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
+            className={`border px-4 py-1.5 text-xs font-bold uppercase tracking-widest transition-colors ${
               values.type === type.value
-                ? "bg-accent text-accent-foreground"
-                : "bg-muted text-muted-foreground hover:bg-muted/70"
+                ? "border-accent bg-accent text-accent-foreground"
+                : "border-border bg-transparent text-muted-foreground hover:border-foreground/40 hover:text-foreground"
             }`}
           >
             {type.label}
@@ -92,7 +92,7 @@ export function SearchPanel({
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className={isHero ? "grid gap-4 md:grid-cols-3" : "grid gap-4 md:grid-cols-2"}>
         <div className="space-y-1.5">
           <Label htmlFor="search-location">Location</Label>
           <Input
@@ -142,7 +142,7 @@ export function SearchPanel({
         />
       </div>
 
-      <div className="flex flex-col gap-2 sm:flex-row">
+      <div className={isHero ? "flex flex-col gap-2 md:flex-row" : "flex flex-col gap-2 sm:flex-row"}>
         <Button type="submit" className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90">
           <Search className="size-4" aria-hidden="true" />
           Search Properties

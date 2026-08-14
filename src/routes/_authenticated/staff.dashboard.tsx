@@ -193,7 +193,7 @@ function StatCard({
   value: number;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
+    <div className="rounded-sm border border-border bg-card p-5">
       <Icon className="size-5 text-accent" aria-hidden="true" />
       <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground">{label}</p>
       <p className="font-display text-3xl">{value}</p>
@@ -224,7 +224,7 @@ function PropertiesTab({
 
   if (editing !== undefined) {
     return (
-      <div className="rounded-xl border border-border bg-card p-6">
+      <div className="rounded-sm border border-border bg-card p-6">
         <h2 className="font-display text-2xl">{editing ? "Edit listing" : "New listing"}</h2>
         <div className="mt-6">
           <PropertyEditor
@@ -252,7 +252,7 @@ function PropertiesTab({
           Add property
         </Button>
       </div>
-      <div className="overflow-x-auto rounded-xl border border-border">
+      <div className="overflow-x-auto rounded-sm border border-border">
         <table className="w-full min-w-[720px] text-sm">
           <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <tr>
@@ -362,7 +362,7 @@ function LeadsTab({
             type="button"
             aria-pressed={filter === status}
             onClick={() => setFilter(status)}
-            className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
+            className={`rounded-sm px-4 py-1.5 text-sm font-semibold ${
               filter === status
                 ? "bg-accent text-accent-foreground"
                 : "bg-muted text-muted-foreground hover:bg-muted/70"
@@ -374,7 +374,7 @@ function LeadsTab({
       </div>
 
       {visible.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
+        <p className="rounded-sm border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
           No leads in this stage yet.
         </p>
       ) : (
@@ -382,7 +382,7 @@ function LeadsTab({
           {visible.map((lead) => {
             const property = properties.find((item) => item.id === lead.property_id);
             return (
-              <article key={lead.id} className="rounded-xl border border-border bg-card p-5">
+              <article key={lead.id} className="rounded-sm border border-border bg-card p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <h3 className="font-semibold">{lead.name}</h3>
@@ -542,7 +542,7 @@ function ContentTab({
           {reviews.map((review) => (
             <div
               key={review.id}
-              className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-border bg-card p-5"
+              className="flex flex-wrap items-start justify-between gap-3 rounded-sm border border-border bg-card p-5"
             >
               <div className="max-w-2xl">
                 <p className="font-semibold">
@@ -570,7 +570,7 @@ function ContentTab({
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border border-border bg-card p-6">
+        <div className="rounded-sm border border-border bg-card p-6">
           <h2 className="font-display text-xl">Add an FAQ</h2>
           <form onSubmit={submitFaq} className="mt-4 space-y-3">
             <div className="space-y-1.5">
@@ -600,7 +600,7 @@ function ContentTab({
           </p>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-6">
+        <div className="rounded-sm border border-border bg-card p-6">
           <h2 className="font-display text-xl">Add a case study</h2>
           <form onSubmit={submitCase} className="mt-4 space-y-3">
             <div className="grid gap-3 sm:grid-cols-2">
@@ -721,7 +721,7 @@ function PlatformTab({
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
-      <div className="rounded-xl border border-border bg-card p-6">
+      <div className="rounded-sm border border-border bg-card p-6">
         <h2 className="font-display text-xl">Platform settings</h2>
         <form onSubmit={submitSettings} className="mt-4 space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
@@ -787,7 +787,7 @@ function PlatformTab({
         </form>
       </div>
 
-      <div className="rounded-xl border border-border bg-card p-6">
+      <div className="rounded-sm border border-border bg-card p-6">
         <h2 className="font-display text-xl">Roles & access</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Grant or revoke Admin and Agent access for staff accounts.
@@ -796,7 +796,7 @@ function PlatformTab({
           {staff.map((member) => {
             const memberRoles = roles.filter((role) => role.user_id === member.id).map((r) => r.role);
             return (
-              <div key={member.id} className="rounded-lg border border-border p-4">
+              <div key={member.id} className="rounded-sm border border-border p-4">
                 <p className="font-semibold">{member.full_name ?? member.id.slice(0, 8)}</p>
                 <p className="text-xs text-muted-foreground">
                   {memberRoles.length ? memberRoles.join(", ") : "No roles"}

@@ -28,7 +28,7 @@ function MediaPage() {
       />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {items.map((item) => (
-          <figure key={item.url} className="overflow-hidden rounded-md border border-border bg-card">
+          <figure key={item.url} className="overflow-hidden rounded-sm border border-border bg-card">
             <img
               src={item.url}
               onError={withImageFallback}

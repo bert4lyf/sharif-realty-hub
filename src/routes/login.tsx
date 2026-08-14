@@ -48,7 +48,7 @@ function LoginPage() {
 
   return (
     <div className="mx-auto w-full max-w-md px-4 py-16 sm:px-6">
-      <span className="flex size-11 items-center justify-center rounded-md bg-accent text-accent-foreground">
+      <span className="flex size-11 items-center justify-center rounded-sm bg-accent text-accent-foreground">
         <LockKeyhole className="size-5" aria-hidden="true" />
       </span>
       <h1 className="mt-6 font-display text-3xl">Dashboard login</h1>
@@ -71,7 +71,7 @@ function LoginPage() {
         </Button>
       </form>
 
-      <p className="mt-6 rounded-md border border-border bg-muted/40 p-3 text-xs text-muted-foreground">
+      <p className="mt-6 rounded-sm border border-border bg-muted/40 p-3 text-xs text-muted-foreground">
         Demo credentials — {ADMIN_EMAIL} / {ADMIN_PASSWORD}
       </p>
     </div>

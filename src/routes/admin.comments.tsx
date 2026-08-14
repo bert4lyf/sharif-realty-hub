@@ -38,7 +38,7 @@ function CommentsPage() {
       <AdminPageHeader title="Comments" description="Visitor comments left on property posts." />
       <div className="space-y-3">
         {COMMENTS.map((comment) => (
-          <article key={comment.id} className="rounded-md border border-border bg-card p-4">
+          <article key={comment.id} className="rounded-sm border border-border bg-card p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold text-foreground">{comment.author}</p>
               <p className="text-xs text-muted-foreground">

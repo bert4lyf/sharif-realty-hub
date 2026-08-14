@@ -64,10 +64,10 @@ function CaseStudiesPage() {
           {data.caseStudies.map((study) => (
             <article
               key={study.id}
-              className="grid gap-6 rounded-xl border border-border bg-card p-6 md:grid-cols-[1fr_280px]"
+              className="grid gap-6 rounded-sm border border-border bg-card p-6 md:grid-cols-[1fr_280px]"
             >
               <div>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold text-accent-strong">
+                <span className="inline-flex items-center gap-1.5 rounded-sm bg-accent/15 px-3 py-1 text-xs font-semibold text-accent-strong">
                   <TrendingUp className="size-3.5" aria-hidden="true" />
                   {study.days_on_market !== null && study.percent_of_asking !== null
                     ? `Sold in ${study.days_on_market} days for ${Number(study.percent_of_asking)}% of asking`
@@ -88,7 +88,7 @@ function CaseStudiesPage() {
                   </blockquote>
                 )}
               </div>
-              <dl className="grid grid-cols-2 gap-4 self-start rounded-lg bg-muted/60 p-5 md:grid-cols-1">
+              <dl className="grid grid-cols-2 gap-4 self-start rounded-sm bg-muted/60 p-5 md:grid-cols-1">
                 {study.sale_price !== null && (
                   <div>
                     <dt className="text-xs text-muted-foreground">Sold price</dt>
@@ -112,7 +112,7 @@ function CaseStudiesPage() {
           ))}
         </div>
 
-        <div className="mt-12 rounded-xl border border-border bg-primary p-8 text-primary-foreground">
+        <div className="mt-12 rounded-sm border border-border bg-primary p-8 text-primary-foreground">
           <h2 className="font-display text-2xl">Want these numbers for your address?</h2>
           <p className="mt-2 max-w-xl text-sm text-primary-foreground/75">
             Request a valuation and we'll show you the comparables behind the price — or start with

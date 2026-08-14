@@ -47,7 +47,7 @@ function ThankYouPage() {
     <>
       <Breadcrumbs items={[{ label: "Thank You" }]} />
       <div className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6">
-        <span className="flex size-12 items-center justify-center rounded-full bg-accent/15 text-accent-strong">
+        <span className="flex size-12 items-center justify-center rounded-sm bg-accent/15 text-accent-strong">
           <CheckCircle2 className="size-6" aria-hidden="true" />
         </span>
         <h1 className="mt-6 font-display text-3xl sm:text-4xl">Thank you — your request is in</h1>
@@ -55,15 +55,15 @@ function ThankYouPage() {
           {SITE.owner} and the Sharif Realty team have your inquiry. Here's exactly what happens next.
         </p>
 
-        <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
+        <div className="mt-6 inline-flex items-center gap-2 rounded-sm bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
           <Timer className="size-4 text-accent" aria-hidden="true" />
           Response guarantee: within 15 minutes
         </div>
 
         <ol className="mt-10 space-y-5">
           {STEPS.map((step, index) => (
-            <li key={step.title} className="flex gap-4 rounded-xl border border-border bg-card p-5">
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-accent-foreground">
+            <li key={step.title} className="flex gap-4 rounded-sm border border-border bg-card p-5">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-sm bg-accent text-sm font-bold text-accent-foreground">
                 {index + 1}
               </span>
               <div>
