@@ -9,7 +9,7 @@ export function SiteFooter() {
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
         <div className="space-y-4 md:col-span-2">
           <div className="flex items-center gap-2.5">
-            <span className="flex size-9 items-center justify-center rounded-md bg-accent text-accent-foreground">
+            <span className="flex size-9 items-center justify-center rounded-sm bg-accent text-accent-foreground">
               <Building2 className="size-5" aria-hidden="true" />
             </span>
             <span className="font-display text-lg font-semibold">Sharif Realty</span>

@@ -16,7 +16,7 @@ function InvoicesPage() {
   return (
     <>
       <AdminPageHeader title="Invoices" description="Commission and rental invoices." />
-      <div className="overflow-x-auto rounded-md border border-border bg-card">
+      <div className="overflow-x-auto rounded-sm border border-border bg-card">
         <table className="w-full min-w-[560px] text-sm">
           <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <tr>

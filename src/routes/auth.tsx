@@ -90,7 +90,7 @@ function AuthPage() {
     <>
       <Breadcrumbs items={[{ label: "Staff Sign In" }]} />
       <div className="mx-auto w-full max-w-md px-4 py-16 sm:px-6">
-        <span className="flex size-11 items-center justify-center rounded-md bg-accent text-accent-foreground">
+        <span className="flex size-11 items-center justify-center rounded-sm bg-accent text-accent-foreground">
           <KeyRound className="size-5" aria-hidden="true" />
         </span>
         <h1 className="mt-6 font-display text-3xl">

@@ -70,8 +70,8 @@ export function SearchPanel({
       onSubmit={submit}
       className={
         isHero
-          ? "space-y-5 rounded-2xl border border-border/40 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-6"
-          : "space-y-5 rounded-xl border border-border bg-card p-5"
+          ? "space-y-5 rounded-sm border border-border/40 bg-card/95 p-5 shadow-xl backdrop-blur sm:p-6"
+          : "space-y-5 rounded-sm border border-border bg-card p-5"
       }
     >
       <div className="flex flex-wrap gap-2" role="group" aria-label="Property type">
@@ -81,7 +81,7 @@ export function SearchPanel({
             type="button"
             aria-pressed={values.type === type.value}
             onClick={() => setValues((v) => ({ ...v, type: type.value }))}
-            className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-colors ${
+            className={`rounded-sm px-4 py-1.5 text-sm font-semibold transition-colors ${
               values.type === type.value
                 ? "bg-accent text-accent-foreground"
                 : "bg-muted text-muted-foreground hover:bg-muted/70"

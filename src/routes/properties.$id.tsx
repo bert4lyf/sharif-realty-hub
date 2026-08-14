@@ -120,7 +120,7 @@ function PropertyDetail() {
               decoding="async"
               width={1600}
               height={1200}
-              className={`w-full rounded-xl object-cover ${
+              className={`w-full rounded-sm object-cover ${
                 index === 0 ? "aspect-[16/10] md:row-span-2" : "aspect-[16/10] md:aspect-auto md:h-full"
               }`}
             />
@@ -131,7 +131,7 @@ function PropertyDetail() {
           <div className="space-y-8">
             <div>
               <div className="flex flex-wrap items-center gap-3">
-                <Badge className="rounded-full bg-accent px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-accent-foreground">
+                <Badge className="rounded-sm bg-accent px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-accent-foreground">
                   {STATUS_LABELS[property.status]}
                 </Badge>
                 <span className="text-sm text-muted-foreground">
@@ -145,7 +145,7 @@ function PropertyDetail() {
               </p>
             </div>
 
-            <dl className="grid grid-cols-2 gap-4 rounded-xl border border-border bg-card p-6 sm:grid-cols-4">
+            <dl className="grid grid-cols-2 gap-4 rounded-sm border border-border bg-card p-6 sm:grid-cols-4">
               <div>
                 <dt className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <Bed className="size-4 text-accent" aria-hidden="true" /> Beds
@@ -218,7 +218,7 @@ function PropertyDetail() {
           </div>
 
           <aside id="request-info" className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
-            <div className="rounded-xl border border-border bg-card p-6">
+            <div className="rounded-sm border border-border bg-card p-6">
               <h2 className="font-display text-xl">Book a viewing</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 {SITE.owner} personally answers within 15 minutes.

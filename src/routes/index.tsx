@@ -193,7 +193,7 @@ function Home() {
           </div>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {topCases.map((study) => (
-              <article key={study.id} className="rounded-xl border border-border bg-card p-6">
+              <article key={study.id} className="rounded-sm border border-border bg-card p-6">
                 <h3 className="font-display text-xl leading-snug">{study.title}</h3>
                 <p className="mt-2 flex items-start gap-1.5 text-xs text-muted-foreground">
                   <MapPin className="mt-0.5 size-3.5 shrink-0 text-accent" aria-hidden="true" />
@@ -247,7 +247,7 @@ function Home() {
               {SITE.hours}
             </p>
           </div>
-          <div className="rounded-xl border border-border bg-card p-6">
+          <div className="rounded-sm border border-border bg-card p-6">
             <LeadForm source="homepage" />
           </div>
         </div>

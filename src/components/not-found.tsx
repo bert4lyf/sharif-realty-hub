@@ -11,7 +11,7 @@ export function NotFound() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center bg-background px-4 py-16">
       <div className="w-full max-w-lg text-center">
-        <span className="mx-auto flex size-12 items-center justify-center rounded-md bg-accent text-accent-foreground">
+        <span className="mx-auto flex size-12 items-center justify-center rounded-sm bg-accent text-accent-foreground">
           <Building2 className="size-6" aria-hidden="true" />
         </span>
         <h1 className="mt-6 font-display text-5xl font-semibold text-foreground">404</h1>

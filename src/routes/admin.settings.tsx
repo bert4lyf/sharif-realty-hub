@@ -19,7 +19,7 @@ function SettingsPage() {
           event.preventDefault();
           toast.success("Settings saved");
         }}
-        className="max-w-2xl space-y-4 rounded-md border border-border bg-card p-5"
+        className="max-w-2xl space-y-4 rounded-sm border border-border bg-card p-5"
       >
         <div className="space-y-1.5">
           <Label htmlFor="s-title">Site title</Label>

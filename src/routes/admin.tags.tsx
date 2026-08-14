@@ -15,7 +15,7 @@ function TagsPage() {
   return (
     <>
       <AdminPageHeader title="Tags" description="Free-form labels attached to property posts." />
-      <div className="overflow-x-auto rounded-md border border-border bg-card">
+      <div className="overflow-x-auto rounded-sm border border-border bg-card">
         <table className="w-full min-w-[480px] text-sm">
           <thead className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
             <tr>

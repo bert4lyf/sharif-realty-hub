@@ -15,7 +15,7 @@ export function PropertyMap({ latitude, longitude, label, destination, height = 
   const hasCoords = typeof latitude === "number" && typeof longitude === "number";
 
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-card">
+    <div className="overflow-hidden rounded-sm border border-border bg-card">
       {hasCoords ? (
         <iframe
           title={`Map showing the location of ${label}`}

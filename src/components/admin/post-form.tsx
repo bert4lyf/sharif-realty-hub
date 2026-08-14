@@ -66,7 +66,7 @@ export function PostForm({ post, onSubmit, onCancel }: Props) {
 
   return (
     <form onSubmit={submit} className="grid gap-6 lg:grid-cols-[1fr_320px]" noValidate>
-      <div className="space-y-5 rounded-md border border-border bg-card p-5">
+      <div className="space-y-5 rounded-sm border border-border bg-card p-5">
         <div className="space-y-1.5">
           <Label htmlFor="f-title">Post Title / Property Name</Label>
           <Input
@@ -121,7 +121,7 @@ export function PostForm({ post, onSubmit, onCancel }: Props) {
       </div>
 
       <aside className="space-y-5">
-        <div className="space-y-4 rounded-md border border-border bg-card p-5">
+        <div className="space-y-4 rounded-sm border border-border bg-card p-5">
           <p className="text-sm font-semibold text-foreground">Publish</p>
           <div className="space-y-1.5">
             <Label htmlFor="f-status">Status</Label>
@@ -145,7 +145,7 @@ export function PostForm({ post, onSubmit, onCancel }: Props) {
           </div>
         </div>
 
-        <div className="space-y-4 rounded-md border border-border bg-card p-5">
+        <div className="space-y-4 rounded-sm border border-border bg-card p-5">
           <p className="text-sm font-semibold text-foreground">Category &amp; Tags</p>
           <div className="space-y-1.5">
             <Label htmlFor="f-category">Category</Label>
@@ -168,7 +168,7 @@ export function PostForm({ post, onSubmit, onCancel }: Props) {
           </div>
         </div>
 
-        <div className="space-y-3 rounded-md border border-border bg-card p-5">
+        <div className="space-y-3 rounded-sm border border-border bg-card p-5">
           <p className="text-sm font-semibold text-foreground">Featured Image URL</p>
           <Input
             id="f-image"

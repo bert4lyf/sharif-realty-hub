@@ -155,7 +155,7 @@ function PropertiesPage() {
             </div>
 
             {properties.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-border p-12 text-center">
+              <div className="rounded-sm border border-dashed border-border p-12 text-center">
                 <SearchX className="mx-auto size-8 text-muted-foreground" aria-hidden="true" />
                 <h2 className="mt-4 text-lg font-semibold">No matches for those filters</h2>
                 <p className="mt-2 text-sm text-muted-foreground">
