@@ -1,35 +1,53 @@
 export const SITE = {
-  name: "Sharif Realty",
+  name: "Sharif Realty Group LLC",
+  shortName: "Sharif Realty",
   owner: "Majeed Sharif",
-  tagline: "Find Your Ideal Property with Sharif Realty",
-  phone: "+1 (305) 555-0142",
-  phoneHref: "tel:+13055550142",
-  whatsapp: "13055550142",
-  email: "hello@sharifrealty.com",
+  tagline: "Your Trusted Connecticut Real Estate Partner",
+  heroSubline:
+    "Specializing in Waterbury, Berlin, Wolcott, and Surrounding Areas.",
+  phone: "(203) 802-8099",
+  phoneHref: "tel:+12038028099",
+  phoneAlt: "(617) 480-5246",
+  phoneAltHref: "tel:+16174805246",
+  whatsapp: "12038028099",
+  email: "SharifRealty19@gmail.com",
   address: {
-    street: "1200 Brickell Ave, Suite 900",
-    city: "Miami",
-    region: "FL",
-    postalCode: "33131",
+    street: "500 Farmington Ave",
+    city: "Waterbury",
+    region: "CT",
+    postalCode: "06710",
   },
-  geo: { lat: 25.7617, lng: -80.1918 },
+  locations: [
+    "Waterbury, CT 06704",
+    "Berlin, CT 06037",
+    "Wolcott, CT",
+  ],
+  zipsServed: ["06704", "06710", "06037"],
+  geo: { lat: 41.5582, lng: -73.0515 },
   hours: "Mon–Fri 9:00–19:00 · Sat 10:00–16:00",
+  experience: "35+ years in residential, commercial and business real estate",
+  social: {
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+    linkedin: "https://www.linkedin.com/",
+  },
   areaServed: [
-    "Miami",
-    "Miami Beach",
-    "Coral Gables",
-    "Coconut Grove",
-    "Key Biscayne",
-    "Brickell",
-    "Palmetto Bay",
-    "Aventura",
+    "Waterbury",
+    "Berlin",
+    "Wolcott",
+    "Southington",
+    "Bucks Hill",
+    "West End District",
+    "Bunker Hill",
+    "East Southington",
   ],
 } as const;
 
 export const FULL_ADDRESS = `${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}`;
 
-export const whatsappHref = (message = "Hi Sharif Realty, I'd like to talk about a property.") =>
-  `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message)}`;
+export const whatsappHref = (
+  message = "Hi Majeed, I'd like to talk about a Connecticut property.",
+) => `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message)}`;
 
 export const directionsHref = (destination: string) =>
   `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;

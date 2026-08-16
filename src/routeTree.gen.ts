@@ -16,6 +16,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as FaqsRouteImport } from './routes/faqs'
+import { Route as ListYourPropertyRouteImport } from './routes/list-your-property'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
@@ -69,6 +70,11 @@ const CaseStudiesRoute = CaseStudiesRouteImport.update({
 const FaqsRoute = FaqsRouteImport.update({
   id: '/faqs',
   path: '/faqs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListYourPropertyRoute = ListYourPropertyRouteImport.update({
+  id: '/list-your-property',
+  path: '/list-your-property',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -180,6 +186,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
+  '/list-your-property': typeof ListYourPropertyRoute
   '/login': typeof LoginRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -207,6 +214,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
+  '/list-your-property': typeof ListYourPropertyRoute
   '/login': typeof LoginRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -237,6 +245,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/case-studies': typeof CaseStudiesRoute
   '/faqs': typeof FaqsRoute
+  '/list-your-property': typeof ListYourPropertyRoute
   '/login': typeof LoginRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -267,6 +276,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/case-studies'
     | '/faqs'
+    | '/list-your-property'
     | '/login'
     | '/privacy-policy'
     | '/robots.txt'
@@ -294,6 +304,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/case-studies'
     | '/faqs'
+    | '/list-your-property'
     | '/login'
     | '/privacy-policy'
     | '/robots.txt'
@@ -323,6 +334,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/case-studies'
     | '/faqs'
+    | '/list-your-property'
     | '/login'
     | '/privacy-policy'
     | '/robots.txt'
@@ -353,6 +365,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CaseStudiesRoute: typeof CaseStudiesRoute
   FaqsRoute: typeof FaqsRoute
+  ListYourPropertyRoute: typeof ListYourPropertyRoute
   LoginRoute: typeof LoginRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
@@ -411,6 +424,13 @@ declare module '@tanstack/react-router' {
       path: '/faqs'
       fullPath: '/faqs'
       preLoaderRoute: typeof FaqsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/list-your-property': {
+      id: '/list-your-property'
+      path: '/list-your-property'
+      fullPath: '/list-your-property'
+      preLoaderRoute: typeof ListYourPropertyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -607,6 +627,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CaseStudiesRoute: CaseStudiesRoute,
   FaqsRoute: FaqsRoute,
+  ListYourPropertyRoute: ListYourPropertyRoute,
   LoginRoute: LoginRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
