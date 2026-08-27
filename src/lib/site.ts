@@ -1,56 +1,67 @@
 export const SITE = {
   name: "Sharif Realty Group LLC",
   shortName: "Sharif Realty",
+  url: "https://sharifrealty.com",
   owner: "Majeed Sharif",
-  tagline: "Your Trusted Connecticut Real Estate Partner",
+  tagline: "Real Estate & Business Sales in Connecticut & Massachusetts",
   heroSubline:
-    "Specializing in Waterbury, Berlin, Wolcott, and Surrounding Areas.",
+    "With over 35 years of experience in residential, commercial, and business real estate.",
   phone: "(203) 802-8099",
   phoneHref: "tel:+12038028099",
-  phoneAlt: "(617) 480-5246",
-  phoneAltHref: "tel:+16174805246",
+  phoneDisplay: "203 802 8099",
   whatsapp: "12038028099",
   email: "SharifRealty19@gmail.com",
   address: {
-    street: "500 Farmington Ave",
+    street: "3125 North Main St",
     city: "Waterbury",
     region: "CT",
-    postalCode: "06710",
+    postalCode: "06704",
   },
   locations: [
     "Waterbury, CT 06704",
     "Berlin, CT 06037",
-    "Wolcott, CT",
+    "Southington, CT",
+    "East Hartford, CT",
+    "Stamford, CT",
+    "Hartford, CT",
   ],
-  zipsServed: ["06704", "06710", "06037"],
-  geo: { lat: 41.5582, lng: -73.0515 },
-  hours: "Mon–Fri 9:00–19:00 · Sat 10:00–16:00",
-  experience: "35+ years in residential, commercial and business real estate",
+  zipsServed: ["06704", "06710", "06037", "06103", "06902"],
+  geo: { lat: 41.5835, lng: -73.0368 },
+  hours: "Mon-Fri: 9:00 AM - 6:00 PM",
+  experience: "35+ years in residential, commercial, and business real estate",
   social: {
     facebook: "https://www.facebook.com/",
     instagram: "https://www.instagram.com/",
     linkedin: "https://www.linkedin.com/",
+    twitter: "https://twitter.com/",
+  },
+  licenses: {
+    ct: "RES.0792184",
+    ma: "9563211",
   },
   areaServed: [
     "Waterbury",
     "Berlin",
-    "Wolcott",
     "Southington",
-    "Bucks Hill",
-    "West End District",
-    "Bunker Hill",
-    "East Southington",
+    "East Hartford",
+    "Hartford",
+    "Stamford",
+    "Connecticut",
+    "Massachusetts",
   ],
 } as const;
 
 export const FULL_ADDRESS = `${SITE.address.street}, ${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}`;
 
 export const whatsappHref = (
-  message = "Hi Majeed, I'd like to talk about a Connecticut property.",
+  message = "Hi Majeed, I would like to inquire about real estate opportunities with Sharif Realty.",
 ) => `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message)}`;
 
-export const directionsHref = (destination: string) =>
+export const directionsHref = (destination = FULL_ADDRESS) =>
   `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
 
-export const mapEmbedSrc = (lat: number, lng: number, span = 0.008) =>
-  `https://www.openstreetmap.org/export/embed.html?bbox=${lng - span}%2C${lat - span / 2}%2C${lng + span}%2C${lat + span / 2}&layer=mapnik&marker=${lat}%2C${lng}`;
+export const googleMapsUrl = (query = "3125 North Main St Waterbury Ct 06704") =>
+  `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=m&z=14&output=embed&iwloc=near`;
+
+export const mapEmbedSrc = (lat: number, lng: number) =>
+  `https://maps.google.com/maps?q=${lat},${lng}&t=m&z=14&output=embed&iwloc=near`;

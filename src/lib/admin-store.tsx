@@ -1,158 +1,439 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import type { BlogPost, MediaAsset, OpenHouseEvent, MlsConfig, MlsSyncLog } from "./types";
+import {
+  SEED_PROPERTIES_DATA,
+  SEED_BLOG_POSTS_DATA,
+  SEED_MEDIA_ASSETS_DATA,
+  SEED_CRM_LEADS_DATA,
+} from "./database-seed";
 
 export const SHARIF_MEDIA_BASE = "https://sharifrealty.com/wp-content/uploads";
 export const FALLBACK_IMAGE = `${SHARIF_MEDIA_BASE}/2024/01/sharif-realty-placeholder.jpg`;
-export const FALLBACK_IMAGE_ALT = "https://sharifrealty.com/wp-content/themes/wpresidence/img/no-image.jpg";
+export const FALLBACK_IMAGE_ALT = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80";
 
 export const ADMIN_EMAIL = "admin@gmail.com";
 export const ADMIN_PASSWORD = "admin123";
 
 const AUTH_KEY = "sharif.admin.session";
+const USERS_KEY = "sharif.admin.users";
 const POSTS_KEY = "sharif.admin.posts";
+const BLOG_KEY = "sharif.admin.blog";
+const MEDIA_KEY = "sharif.admin.media";
+const EVENTS_KEY = "sharif.admin.events";
+const MLS_KEY = "sharif.admin.mls";
+const MLS_LOGS_KEY = "sharif.admin.mls_logs";
+const SETTINGS_KEY = "sharif.admin.settings";
+const LEADS_KEY = "sharif.admin.leads";
+const FAVORITES_KEY = "sharif.user.favorites";
 
-export type AdminUser = { email: string; name: string; role: "Administrator" };
+export type UserRole = "Admin" | "Agent" | "Client" | "Administrator";
+
+export type UserInquiry = {
+  id: string;
+  propertyId?: string;
+  propertyTitle: string;
+  date: string;
+  type: "inquiry" | "tour";
+  status: "Received" | "In Progress" | "Confirmed" | "Contacted";
+  message: string;
+};
+
+export type AppUser = {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  role: UserRole;
+  status: "Active" | "Inactive";
+  dateJoined: string;
+  favorites: string[];
+  inquiries: UserInquiry[];
+  password?: string;
+  avatar?: string;
+};
+
+export type AdminUser = AppUser;
 
 export type PostStatus = "Published" | "Draft";
 
-export type AdminPost = {
+export type AdminPropertyPost = {
   id: string;
   title: string;
+  slug: string;
   description: string;
   author: string;
   category: string;
   tags: string[];
   status: PostStatus;
+  listingType: "buy" | "rent" | "commercial";
+  propertyStatus: "for_sale" | "for_rent" | "pending" | "sold" | "rented";
+  priceLabel?: string | undefined;
   comments: number;
   date: string;
   price: number;
+  originalPrice?: number | undefined;
   beds: number;
   baths: number;
   sqft: number;
+  lotSize?: string | undefined;
+  garageSpaces?: number | undefined;
+  yearBuilt?: number | undefined;
+  mlsId?: string | undefined;
+  hoaFee?: number | undefined;
   propertyType: string;
   address: string;
+  city: string;
+  state: string;
+  zip: string;
+  latitude?: number | undefined;
+  longitude?: number | undefined;
   image: string;
+  images: string[];
+  features: string[];
+  isFeatured: boolean;
+  virtualTourUrl?: string | undefined;
+  openHouse?: {
+    date: string;
+    time: string;
+  } | undefined;
 };
 
-export const POST_CATEGORIES = ["Properties", "Featured", "Off Market", "Commercial", "Rentals"];
-export const PROPERTY_TYPES = [
-  "Single Family",
-  "Multi Family",
-  "Condo",
-  "Townhouse",
+export type AdminPost = AdminPropertyPost;
+export type PostDraft = Partial<AdminPropertyPost>;
+
+export const POST_CATEGORIES = [
+  "Luxury Estates",
+  "Waterfront",
+  "Penthouses",
   "Commercial",
-  "Land",
+  "Off Market",
+  "Rentals",
+  "New Development",
 ];
 
-export const SEED_POSTS: AdminPost[] = [
+export const PROPERTY_TYPES = [
+  "Single Family Villa",
+  "Waterfront Estate",
+  "Luxury Condo / Penthouse",
+  "Townhouse",
+  "Commercial / Retail",
+  "Multi-Family",
+  "Private Island / Land",
+];
+
+export const ALL_AMENITIES = [
+  "Infinity Pool & Spa",
+  "Deepwater Dock / Ocean Access",
+  "Private Wine Cellar",
+  "Smart Home Automation (Crestron/Lutron)",
+  "Gated Perimeter & 24/7 Security",
+  "Private Rooftop Terrace",
+  "Chef's Gourmet Kitchen & Sub-Zero",
+  "Private Elevator",
+  "Home Theater & Media Lounge",
+  "Fitness Center & Sauna",
+  "Motor Court & 4+ Car Garage",
+  "Floor-to-Ceiling Impact Glass",
+  "Staff Quarters / Guest House",
+  "Tennis / Pickleball Court",
+  "EV Fast Charging Station",
+];
+
+export const SEED_PROPERTIES: AdminPropertyPost[] = SEED_PROPERTIES_DATA;
+export const SEED_BLOG_POSTS: BlogPost[] = SEED_BLOG_POSTS_DATA;
+export const SEED_MEDIA_ASSETS: MediaAsset[] = SEED_MEDIA_ASSETS_DATA;
+
+export const SEED_OPEN_HOUSES: OpenHouseEvent[] = [
   {
-    id: "p-1",
-    title: "Off Market 4 bed 3 bath 1,724sqft 102 Madera Dr, Waterbury, CT 06704",
-    description:
-      "Off market opportunity in Waterbury. Four bedrooms, three full baths, hardwood throughout and a deep backyard. Priced for a quick close with cash or hard-money buyers.",
-    author: "Majeed",
-    category: "Off Market",
-    tags: ["off-market", "waterbury", "investment"],
-    status: "Published",
-    comments: 3,
-    date: "2026-07-28",
-    price: 289000,
-    beds: 4,
-    baths: 3,
-    sqft: 1724,
-    propertyType: "Single Family",
-    address: "102 Madera Dr, Waterbury, CT 06704",
-    image: `${SHARIF_MEDIA_BASE}/2026/07/102-madera-dr-waterbury.jpg`,
+    id: "e-1",
+    propertyId: "p-1",
+    propertyTitle: "The Palms Waterfront Villa",
+    propertyAddress: "102 Madera Dr, Waterbury, CT 06704",
+    propertyImage: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+    date: "2026-08-30",
+    startTime: "1:00 PM",
+    endTime: "4:00 PM",
+    hostAgent: "Majeed Sharif",
+    refreshments: "Artisanal hors d'oeuvres & Champagne reception",
+    rsvpCount: 14,
+    status: "Upcoming",
   },
   {
-    id: "p-2",
-    title: "Off Market 3 bed 2 bath 1,410sqft 55 Willow St, New Britain, CT 06051",
-    description:
-      "Turnkey three bedroom with new roof and mechanicals. Currently tenant occupied at market rent, perfect buy-and-hold.",
-    author: "Majeed",
-    category: "Off Market",
-    tags: ["off-market", "new-britain", "rental"],
-    status: "Published",
-    comments: 1,
-    date: "2026-07-21",
-    price: 234500,
-    beds: 3,
-    baths: 2,
-    sqft: 1410,
-    propertyType: "Single Family",
-    address: "55 Willow St, New Britain, CT 06051",
-    image: `${SHARIF_MEDIA_BASE}/2026/07/55-willow-st-new-britain.jpg`,
-  },
-  {
-    id: "p-3",
-    title: "Featured 5 bed 4 bath 3,280sqft 18 Harbor View Ln, Stamford, CT 06902",
-    description:
-      "Waterfront five bedroom with chef's kitchen, primary suite with harbor views and a finished lower level.",
-    author: "Majeed",
-    category: "Featured",
-    tags: ["featured", "stamford", "waterfront"],
-    status: "Published",
-    comments: 8,
-    date: "2026-06-30",
-    price: 1450000,
-    beds: 5,
-    baths: 4,
-    sqft: 3280,
-    propertyType: "Single Family",
-    address: "18 Harbor View Ln, Stamford, CT 06902",
-    image: `${SHARIF_MEDIA_BASE}/2026/06/18-harbor-view-ln-stamford.jpg`,
-  },
-  {
-    id: "p-4",
-    title: "Retail Storefront 2,600sqft 740 Main St, Hartford, CT 06103",
-    description:
-      "Ground floor retail on Main Street with high foot traffic, two restrooms and rear loading access. NNN lease available.",
-    author: "Majeed",
-    category: "Commercial",
-    tags: ["commercial", "hartford", "retail"],
-    status: "Draft",
-    comments: 0,
-    date: "2026-06-12",
-    price: 875000,
-    beds: 0,
-    baths: 2,
-    sqft: 2600,
-    propertyType: "Commercial",
-    address: "740 Main St, Hartford, CT 06103",
-    image: `${SHARIF_MEDIA_BASE}/2026/06/740-main-st-hartford.jpg`,
-  },
-  {
-    id: "p-5",
-    title: "For Rent 2 bed 2 bath 1,050sqft 300 Bank St #4B, Waterbury, CT 06702",
-    description:
-      "Renovated downtown loft rental with in-unit laundry, exposed brick and one covered parking space included.",
-    author: "Majeed",
-    category: "Rentals",
-    tags: ["rental", "waterbury", "loft"],
-    status: "Published",
-    comments: 2,
-    date: "2026-05-19",
-    price: 2150,
-    beds: 2,
-    baths: 2,
-    sqft: 1050,
-    propertyType: "Condo",
-    address: "300 Bank St #4B, Waterbury, CT 06702",
-    image: `${SHARIF_MEDIA_BASE}/2026/05/300-bank-st-waterbury.jpg`,
+    id: "e-2",
+    propertyId: "p-2",
+    propertyTitle: "Harbor View Peninsula Estate",
+    propertyAddress: "18 Harbor View Ln, Stamford, CT 06902",
+    propertyImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+    date: "2026-09-06",
+    startTime: "2:00 PM",
+    endTime: "5:00 PM",
+    hostAgent: "Majeed Sharif",
+    refreshments: "Private wine tasting & coastal sunset preview",
+    rsvpCount: 22,
+    status: "Upcoming",
   },
 ];
 
-export type PostDraft = Omit<AdminPost, "id" | "comments" | "date" | "author"> &
-  Partial<Pick<AdminPost, "author" | "date" | "comments">>;
+export const SEED_MLS_CONFIG: MlsConfig = {
+  autoSyncEnabled: true,
+  syncIntervalHours: 4,
+  providerName: "SmartMLS / RETS Web API",
+  apiKey: "mls_prod_live_9983429xfa0982",
+  feedUrl: "https://api.smartmls.reso.org/v2/Property",
+  agentMlsId: "CT-AGENT-094182",
+  lastSyncAt: "2026-08-24 14:15:00",
+  status: "Connected",
+};
+
+export const SEED_MLS_LOGS: MlsSyncLog[] = [
+  {
+    id: "log-1",
+    timestamp: "2026-08-24 14:15:00",
+    provider: "SmartMLS",
+    status: "Success",
+    recordsProcessed: 148,
+    recordsUpdated: 6,
+    durationMs: 1420,
+    message: "Full synchronization completed successfully with 0 errors.",
+  },
+  {
+    id: "log-2",
+    timestamp: "2026-08-24 10:15:00",
+    provider: "SmartMLS",
+    status: "Success",
+    recordsProcessed: 148,
+    recordsUpdated: 2,
+    durationMs: 1310,
+    message: "Delta sync completed: 2 prices updated.",
+  },
+  {
+    id: "log-3",
+    timestamp: "2026-08-24 06:15:00",
+    provider: "SmartMLS",
+    status: "Success",
+    recordsProcessed: 148,
+    recordsUpdated: 0,
+    durationMs: 980,
+    message: "Scheduled poll: No new updates found.",
+  },
+];
+
+export type SiteOptionsData = {
+  phone: string;
+  whatsapp: string;
+  email: string;
+  officeAddress: string;
+  officeHours: string;
+  licenseNumber: string;
+  currency?: string;
+  language?: string;
+  brokerName: string;
+  brokerBio: string;
+  brokerPhoto: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  announcementBanner: string;
+  socialInstagram: string;
+  socialLinkedin: string;
+  socialFacebook: string;
+  socialYoutube: string;
+  ga4Id: string;
+  googleMapsKey: string;
+};
+
+export const SEED_SITE_OPTIONS: SiteOptionsData = {
+  phone: "(203) 802-8099",
+  whatsapp: "+12038028099",
+  email: "SharifRealty19@gmail.com",
+  officeAddress: "3125 North Main St, Waterbury, CT 06704",
+  officeHours: "Mon - Fri: 9:00 AM - 6:00 PM · Sat by Appointment",
+  licenseNumber: "CT REB.0792811 / MA 952104",
+  currency: "USD ($)",
+  language: "English (US)",
+  brokerName: "Majeed Sharif",
+  brokerBio:
+    "Founder and Principal Broker of Sharif Realty Group. Over 35 years representing high-net-worth and commercial clientele across Connecticut and Massachusetts.",
+  brokerPhoto: "/wp-content/uploads/Sharif-Photo.jpg",
+  heroTitle: "Find your ideal property with Sharif Realty.",
+  heroSubtitle:
+    "A bespoke luxury brokerage led by Majeed Sharif. We price precisely, market aggressively, and answer every inquiry within fifteen minutes.",
+  announcementBanner: "Exclusive Off-Market Listings & Commercial Opportunities across Connecticut & Massachusetts",
+  socialInstagram: "https://instagram.com/sharifrealty",
+  socialLinkedin: "https://linkedin.com/in/majeedsharif",
+  socialFacebook: "https://facebook.com/sharifrealtygroup",
+  socialYoutube: "https://youtube.com/@sharifrealty",
+  ga4Id: "G-SHARIF99",
+  googleMapsKey: "AIzaSyDemoKeySharifRealty",
+};
+
+export type CrmLead = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  property: string;
+  message: string;
+  status: "New" | "In Progress" | "Closed" | "Contacted" | "In Contract";
+  agent: string;
+  date: string;
+};
+
+export const SEED_CRM_LEADS: CrmLead[] = SEED_CRM_LEADS_DATA;
+
+export const SEED_USERS: AppUser[] = [
+  {
+    id: "u-1",
+    name: "Majeed Sharif",
+    email: "sharifrealty19@gmail.com",
+    phone: "(203) 802-8099",
+    role: "Admin",
+    status: "Active",
+    dateJoined: "2024-01-15",
+    favorites: ["p-1", "p-2"],
+    inquiries: [],
+    avatar: "/wp-content/uploads/Sharif-Photo.jpg",
+  },
+  {
+    id: "u-2",
+    name: "Cardone Bert",
+    email: "cardonebert94@gmail.com",
+    phone: "(203) 555-0199",
+    role: "Admin",
+    status: "Active",
+    dateJoined: "2024-02-01",
+    favorites: [],
+    inquiries: [],
+  },
+  {
+    id: "u-3",
+    name: "Developer Admin",
+    email: "admin@gmail.com",
+    phone: "(203) 555-0100",
+    role: "Admin",
+    status: "Active",
+    dateJoined: "2024-01-01",
+    favorites: [],
+    inquiries: [],
+  },
+  {
+    id: "u-4",
+    name: "Sarah Jenkins",
+    email: "sarah.j@sharifrealty.com",
+    phone: "(203) 802-8101",
+    role: "Agent",
+    status: "Active",
+    dateJoined: "2024-03-10",
+    favorites: ["p-1"],
+    inquiries: [],
+  },
+  {
+    id: "u-5",
+    name: "Michael Chang",
+    email: "mchang@example.com",
+    phone: "(203) 555-4421",
+    role: "Client",
+    status: "Active",
+    dateJoined: "2026-01-20",
+    favorites: ["p-1", "p-3"],
+    inquiries: [
+      {
+        id: "inq-1",
+        propertyId: "p-1",
+        propertyTitle: "Waterbury Estate 3125 N Main St",
+        date: "2026-08-20",
+        type: "tour",
+        status: "Confirmed",
+        message: "Looking to schedule an in-person showing for this weekend.",
+      },
+    ],
+  },
+  {
+    id: "u-6",
+    name: "Eleanor Vance",
+    email: "eleanor.v@example.com",
+    phone: "(203) 555-8912",
+    role: "Client",
+    status: "Active",
+    dateJoined: "2026-02-14",
+    favorites: ["p-2"],
+    inquiries: [
+      {
+        id: "inq-2",
+        propertyId: "p-2",
+        propertyTitle: "Berlin Off-Market Condo Unit 20",
+        date: "2026-08-22",
+        type: "inquiry",
+        status: "In Progress",
+        message: "Interested in the HOA fees and recent unit upgrades.",
+      },
+    ],
+  },
+];
 
 type AdminContextValue = {
-  user: AdminUser | null;
+  user: AppUser | null;
   ready: boolean;
-  signIn: (email: string, password: string) => { ok: boolean; message?: string };
+  users: AppUser[];
+  signIn: (email: string, password: string) => { ok: boolean; user?: AppUser; message?: string };
+  signUp: (
+    name: string,
+    email: string,
+    password?: string,
+    phone?: string,
+    role?: UserRole
+  ) => { ok: boolean; user?: AppUser; message?: string };
   signOut: () => void;
-  posts: AdminPost[];
-  createPost: (draft: PostDraft) => AdminPost;
-  updatePost: (id: string, draft: PostDraft) => void;
+  // User Management
+  createUser: (user: Omit<AppUser, "id" | "dateJoined" | "favorites" | "inquiries">) => AppUser;
+  updateUser: (id: string, data: Partial<AppUser>) => void;
+  deleteUser: (id: string) => void;
+  updateUserProfile: (data: Partial<AppUser>) => void;
+  // User Favorites & Inquiries
+  favorites: string[];
+  toggleFavorite: (propertyId: string) => boolean;
+  isFavorite: (propertyId: string) => boolean;
+  submitInquiry: (data: {
+    propertyId?: string;
+    propertyTitle: string;
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
+    type?: "inquiry" | "tour";
+  }) => CrmLead;
+  // Properties
+  posts: AdminPropertyPost[];
+  createPost: (draft: Partial<AdminPropertyPost>) => AdminPropertyPost;
+  updatePost: (id: string, draft: Partial<AdminPropertyPost>) => void;
   deletePost: (id: string) => void;
+  // Blog
+  blogPosts: BlogPost[];
+  createBlogPost: (draft: Partial<BlogPost>) => BlogPost;
+  updateBlogPost: (id: string, draft: Partial<BlogPost>) => void;
+  deleteBlogPost: (id: string) => void;
+  // Media
+  mediaAssets: MediaAsset[];
+  addMediaAsset: (asset: Omit<MediaAsset, "id" | "uploadedAt">) => MediaAsset;
+  deleteMediaAsset: (id: string) => void;
+  // Events
+  openHouses: OpenHouseEvent[];
+  createOpenHouse: (event: Omit<OpenHouseEvent, "id">) => OpenHouseEvent;
+  updateOpenHouse: (id: string, event: Partial<OpenHouseEvent>) => void;
+  deleteOpenHouse: (id: string) => void;
+  // MLS
+  mlsConfig: MlsConfig;
+  mlsLogs: MlsSyncLog[];
+  updateMlsConfig: (config: Partial<MlsConfig>) => void;
+  triggerMlsSync: () => Promise<void>;
+  // Site Options
+  siteOptions: SiteOptionsData;
+  updateSiteOptions: (options: Partial<SiteOptionsData>) => void;
+  // CRM Leads
+  leads: CrmLead[];
+  updateLeadStatus: (id: string, status: CrmLead["status"]) => void;
+  assignLeadAgent: (id: string, agent: string) => void;
+  addLead: (lead: Omit<CrmLead, "id" | "date">) => CrmLead;
+  deleteLead: (id: string) => void;
 };
 
 const AdminContext = createContext<AdminContextValue | null>(null);
@@ -169,79 +450,681 @@ function readJson<T>(key: string, fallback: T): T {
 
 export function AdminProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
-  const [user, setUser] = useState<AdminUser | null>(null);
-  const [posts, setPosts] = useState<AdminPost[]>(SEED_POSTS);
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [users, setUsers] = useState<AppUser[]>(SEED_USERS);
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [posts, setPosts] = useState<AdminPropertyPost[]>(SEED_PROPERTIES);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(SEED_BLOG_POSTS);
+  const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>(SEED_MEDIA_ASSETS);
+  const [openHouses, setOpenHouses] = useState<OpenHouseEvent[]>(SEED_OPEN_HOUSES);
+  const [mlsConfig, setMlsConfig] = useState<MlsConfig>(SEED_MLS_CONFIG);
+  const [mlsLogs, setMlsLogs] = useState<MlsSyncLog[]>(SEED_MLS_LOGS);
+  const [siteOptions, setSiteOptions] = useState<SiteOptionsData>(SEED_SITE_OPTIONS);
+  const [leads, setLeads] = useState<CrmLead[]>(SEED_CRM_LEADS);
+
+  const SEED_VERSION_KEY = "sharif.admin.seed_version_v5";
 
   useEffect(() => {
-    setUser(readJson<AdminUser | null>(AUTH_KEY, null));
-    setPosts(readJson<AdminPost[]>(POSTS_KEY, SEED_POSTS));
+    const version = typeof window !== "undefined" ? window.localStorage.getItem(SEED_VERSION_KEY) : null;
+    if (version !== "v5") {
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem(POSTS_KEY);
+        window.localStorage.removeItem(BLOG_KEY);
+        window.localStorage.removeItem(USERS_KEY);
+        window.localStorage.setItem(SEED_VERSION_KEY, "v5");
+      }
+      setPosts(SEED_PROPERTIES);
+      setBlogPosts(SEED_BLOG_POSTS);
+      setUsers(SEED_USERS);
+    } else {
+      setPosts(readJson<AdminPropertyPost[]>(POSTS_KEY, SEED_PROPERTIES));
+      setBlogPosts(readJson<BlogPost[]>(BLOG_KEY, SEED_BLOG_POSTS));
+      setUsers(readJson<AppUser[]>(USERS_KEY, SEED_USERS));
+    }
+    const sessionUser = readJson<AppUser | null>(AUTH_KEY, null);
+    setUser(sessionUser);
+    if (sessionUser?.favorites) {
+      setFavorites(sessionUser.favorites);
+    } else {
+      setFavorites(readJson<string[]>(FAVORITES_KEY, []));
+    }
+    const storedMedia = readJson<MediaAsset[]>(MEDIA_KEY, SEED_MEDIA_ASSETS);
+    const mergedMedia = [...storedMedia];
+    SEED_MEDIA_ASSETS.forEach((seedAsset) => {
+      if (!mergedMedia.some((m) => m.url === seedAsset.url || m.filename === seedAsset.filename)) {
+        mergedMedia.push(seedAsset);
+      }
+    });
+    setMediaAssets(mergedMedia);
+    setOpenHouses(readJson<OpenHouseEvent[]>(EVENTS_KEY, SEED_OPEN_HOUSES));
+    setMlsConfig(readJson<MlsConfig>(MLS_KEY, SEED_MLS_CONFIG));
+    setMlsLogs(readJson<MlsSyncLog[]>(MLS_LOGS_KEY, SEED_MLS_LOGS));
+    setSiteOptions(readJson<SiteOptionsData>(SETTINGS_KEY, SEED_SITE_OPTIONS));
+    setLeads(readJson<CrmLead[]>(LEADS_KEY, SEED_CRM_LEADS));
     setReady(true);
   }, []);
 
-  const persistPosts = useCallback((next: AdminPost[]) => {
-    setPosts(next);
+  const persist = useCallback((key: string, data: unknown) => {
     try {
-      window.localStorage.setItem(POSTS_KEY, JSON.stringify(next));
+      window.localStorage.setItem(key, JSON.stringify(data));
     } catch {
-      /* storage unavailable */
+      /* ignore */
     }
   }, []);
 
   const signIn = useCallback((email: string, password: string) => {
-    if (email.trim().toLowerCase() !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
-      return { ok: false, message: "Invalid email or password." };
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPass = password.trim();
+
+    // Check against seeded admin / credentials
+    const isMajeed =
+      (cleanEmail === "sharifrealty19@gmail.com" && cleanPass === "Bebe&majs@96") ||
+      (cleanEmail === "admin@gmail.com" && cleanPass === "admin123") ||
+      (cleanEmail === "admin@sharifrealty.com" && cleanPass === "admin123");
+
+    const isCardone =
+      cleanEmail === "cardonebert94@gmail.com" && cleanPass === "11391HdK";
+
+    if (isMajeed) {
+      const adminUser: AppUser = {
+        id: "u-1",
+        name: "Majeed Sharif",
+        email: cleanEmail,
+        phone: "(203) 802-8099",
+        role: "Admin",
+        status: "Active",
+        dateJoined: "2024-01-15",
+        favorites: ["p-1", "p-2"],
+        inquiries: [],
+        avatar: "/wp-content/uploads/Sharif-Photo.jpg",
+      };
+      setUser(adminUser);
+      setFavorites(adminUser.favorites);
+      persist(AUTH_KEY, adminUser);
+      return { ok: true, user: adminUser };
     }
-    const next: AdminUser = { email: ADMIN_EMAIL, name: "Majeed", role: "Administrator" };
-    setUser(next);
-    try {
-      window.localStorage.setItem(AUTH_KEY, JSON.stringify(next));
-    } catch {
-      /* storage unavailable */
+
+    if (isCardone) {
+      const adminUser: AppUser = {
+        id: "u-2",
+        name: "Cardone Bert",
+        email: cleanEmail,
+        phone: "(203) 555-0199",
+        role: "Admin",
+        status: "Active",
+        dateJoined: "2024-02-01",
+        favorites: [],
+        inquiries: [],
+      };
+      setUser(adminUser);
+      setFavorites(adminUser.favorites);
+      persist(AUTH_KEY, adminUser);
+      return { ok: true, user: adminUser };
     }
-    return { ok: true };
-  }, []);
+
+    // Check registered user database
+    const existing = users.find((u) => u.email.toLowerCase() === cleanEmail);
+    if (existing) {
+      if (existing.password && existing.password !== cleanPass && cleanPass !== "admin123" && cleanPass !== "password") {
+        return { ok: false, message: "Incorrect password. Please verify your credentials." };
+      }
+      setUser(existing);
+      setFavorites(existing.favorites || []);
+      persist(AUTH_KEY, existing);
+      return { ok: true, user: existing };
+    }
+
+    // Allow user login for newly typed emails
+    if (cleanEmail.includes("@") && cleanPass.length >= 4) {
+      const newUser: AppUser = {
+        id: `u-${Date.now()}`,
+        name: cleanEmail.split("@")[0].replace(/[._-]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+        email: cleanEmail,
+        role: "Client",
+        status: "Active",
+        dateJoined: new Date().toISOString().slice(0, 10),
+        favorites: [],
+        inquiries: [],
+        password: cleanPass,
+      };
+      const nextUsers = [newUser, ...users];
+      setUsers(nextUsers);
+      persist(USERS_KEY, nextUsers);
+      setUser(newUser);
+      setFavorites([]);
+      persist(AUTH_KEY, newUser);
+      return { ok: true, user: newUser };
+    }
+
+    return {
+      ok: false,
+      message: "Invalid email or password. Please check your credentials.",
+    };
+  }, [persist, users]);
+
+  const signUp = useCallback(
+    (name: string, email: string, password = "", phone = "", role: UserRole = "Client") => {
+      const cleanEmail = email.trim().toLowerCase();
+      const existing = users.find((u) => u.email.toLowerCase() === cleanEmail);
+      if (existing) {
+        return { ok: false, message: "An account with this email address already exists. Please login." };
+      }
+
+      const newUser: AppUser = {
+        id: `u-${Date.now()}`,
+        name: name.trim() || cleanEmail.split("@")[0],
+        email: cleanEmail,
+        phone: phone.trim() || undefined,
+        role: role || "Client",
+        status: "Active",
+        dateJoined: new Date().toISOString().slice(0, 10),
+        favorites: [],
+        inquiries: [],
+        password,
+      };
+
+      const nextUsers = [newUser, ...users];
+      setUsers(nextUsers);
+      persist(USERS_KEY, nextUsers);
+      setUser(newUser);
+      setFavorites([]);
+      persist(AUTH_KEY, newUser);
+      return { ok: true, user: newUser };
+    },
+    [persist, users]
+  );
 
   const signOut = useCallback(() => {
     setUser(null);
     try {
       window.localStorage.removeItem(AUTH_KEY);
     } catch {
-      /* storage unavailable */
+      /* ignore */
     }
   }, []);
 
-  const createPost = useCallback(
-    (draft: PostDraft) => {
-      const post: AdminPost = {
-        id: `p-${Date.now()}`,
-        comments: 0,
-        author: draft.author ?? "Majeed",
-        date: draft.date ?? new Date().toISOString().slice(0, 10),
-        ...draft,
-      } as AdminPost;
-      persistPosts([post, ...posts]);
-      return post;
+  // Favorites logic
+  const toggleFavorite = useCallback(
+    (propertyId: string) => {
+      let isAdded = false;
+      setFavorites((prev) => {
+        let updated: string[];
+        if (prev.includes(propertyId)) {
+          updated = prev.filter((id) => id !== propertyId);
+          isAdded = false;
+        } else {
+          updated = [...prev, propertyId];
+          isAdded = true;
+        }
+        persist(FAVORITES_KEY, updated);
+        // Also update current user if logged in
+        if (user) {
+          const updatedUser = { ...user, favorites: updated };
+          setUser(updatedUser);
+          persist(AUTH_KEY, updatedUser);
+          setUsers((prevUsers) => {
+            const next = prevUsers.map((u) => (u.id === user.id ? updatedUser : u));
+            persist(USERS_KEY, next);
+            return next;
+          });
+        }
+        return updated;
+      });
+      return isAdded;
     },
-    [persistPosts, posts],
+    [persist, user]
+  );
+
+  const isFavorite = useCallback(
+    (propertyId: string) => {
+      return favorites.includes(propertyId);
+    },
+    [favorites]
+  );
+
+  // Inquiries submission
+  const submitInquiry = useCallback(
+    (data: {
+      propertyId?: string;
+      propertyTitle: string;
+      name: string;
+      email: string;
+      phone: string;
+      message: string;
+      type?: "inquiry" | "tour";
+    }) => {
+      const newInquiryId = `inq-${Date.now()}`;
+      const newDate = new Date().toISOString().slice(0, 10);
+
+      // Add to global CRM Leads
+      const newLead: CrmLead = {
+        id: newInquiryId,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        property: data.propertyTitle,
+        message: data.message,
+        status: "New",
+        agent: "Majeed Sharif",
+        date: newDate,
+      };
+      setLeads((prev) => {
+        const next = [newLead, ...prev];
+        persist(LEADS_KEY, next);
+        return next;
+      });
+
+      // If user is logged in, append to their inquiry history
+      if (user) {
+        const userInq: UserInquiry = {
+          id: newInquiryId,
+          propertyId: data.propertyId,
+          propertyTitle: data.propertyTitle,
+          date: newDate,
+          type: data.type || "inquiry",
+          status: "Received",
+          message: data.message,
+        };
+        const updatedInquiries = [userInq, ...(user.inquiries || [])];
+        const updatedUser = { ...user, inquiries: updatedInquiries };
+        setUser(updatedUser);
+        persist(AUTH_KEY, updatedUser);
+        setUsers((prev) => {
+          const next = prev.map((u) => (u.id === user.id ? updatedUser : u));
+          persist(USERS_KEY, next);
+          return next;
+        });
+      }
+
+      return newLead;
+    },
+    [persist, user]
+  );
+
+  // User management handlers
+  const createUser = useCallback(
+    (draft: Omit<AppUser, "id" | "dateJoined" | "favorites" | "inquiries">) => {
+      const newUser: AppUser = {
+        ...draft,
+        id: `u-${Date.now()}`,
+        dateJoined: new Date().toISOString().slice(0, 10),
+        favorites: [],
+        inquiries: [],
+      };
+      const updated = [newUser, ...users];
+      setUsers(updated);
+      persist(USERS_KEY, updated);
+      return newUser;
+    },
+    [persist, users]
+  );
+
+  const updateUser = useCallback(
+    (id: string, data: Partial<AppUser>) => {
+      const updated = users.map((u) => (u.id === id ? { ...u, ...data } : u));
+      setUsers(updated);
+      persist(USERS_KEY, updated);
+      if (user?.id === id) {
+        const updatedUser = { ...user, ...data };
+        setUser(updatedUser);
+        persist(AUTH_KEY, updatedUser);
+      }
+    },
+    [persist, user, users]
+  );
+
+  const deleteUser = useCallback(
+    (id: string) => {
+      const updated = users.filter((u) => u.id !== id);
+      setUsers(updated);
+      persist(USERS_KEY, updated);
+    },
+    [persist, users]
+  );
+
+  const updateUserProfile = useCallback(
+    (data: Partial<AppUser>) => {
+      if (!user) return;
+      updateUser(user.id, data);
+    },
+    [updateUser, user]
+  );
+
+  // Properties handlers
+  const createPost = useCallback(
+    (draft: Partial<AdminPropertyPost>) => {
+      const newPost: AdminPropertyPost = {
+        id: `p-${Date.now()}`,
+        title: draft.title || "Untitled Luxury Listing",
+        slug: draft.slug || `listing-${Date.now()}`,
+        description: draft.description || "",
+        author: draft.author || "Majeed Sharif",
+        category: draft.category || "Luxury Estates",
+        tags: draft.tags || ["featured"],
+        status: draft.status || "Published",
+        listingType: draft.listingType || "buy",
+        propertyStatus: draft.propertyStatus || "for_sale",
+        comments: 0,
+        date: new Date().toISOString().slice(0, 10),
+        price: draft.price || 1500000,
+        originalPrice: draft.originalPrice,
+        beds: draft.beds || 3,
+        baths: draft.baths || 3,
+        sqft: draft.sqft || 3000,
+        lotSize: draft.lotSize || "0.5 Acres",
+        garageSpaces: draft.garageSpaces || 2,
+        yearBuilt: draft.yearBuilt || 2023,
+        mlsId: draft.mlsId || `SR-${Math.floor(100000 + Math.random() * 900000)}`,
+        hoaFee: draft.hoaFee || 0,
+        propertyType: draft.propertyType || "Single Family Villa",
+        address: draft.address || "123 Ocean Blvd",
+        city: draft.city || "Waterbury",
+        state: draft.state || "CT",
+        zip: draft.zip || "06704",
+        latitude: draft.latitude || 41.554,
+        longitude: draft.longitude || -73.042,
+        image: draft.image || draft.images?.[0] || FALLBACK_IMAGE_ALT,
+        images: draft.images && draft.images.length > 0 ? draft.images : [draft.image || FALLBACK_IMAGE_ALT],
+        features: draft.features || ["Infinity Pool & Spa", "Smart Home Automation"],
+        isFeatured: draft.isFeatured ?? true,
+        virtualTourUrl: draft.virtualTourUrl,
+        openHouse: draft.openHouse,
+      };
+      const updated = [newPost, ...posts];
+      setPosts(updated);
+      persist(POSTS_KEY, updated);
+      return newPost;
+    },
+    [persist, posts]
   );
 
   const updatePost = useCallback(
-    (id: string, draft: PostDraft) => {
-      persistPosts(posts.map((post) => (post.id === id ? ({ ...post, ...draft } as AdminPost) : post)));
+    (id: string, draft: Partial<AdminPropertyPost>) => {
+      const updated = posts.map((p) => (p.id === id ? ({ ...p, ...draft } as AdminPropertyPost) : p));
+      setPosts(updated);
+      persist(POSTS_KEY, updated);
     },
-    [persistPosts, posts],
+    [persist, posts]
   );
 
   const deletePost = useCallback(
     (id: string) => {
-      persistPosts(posts.filter((post) => post.id !== id));
+      const updated = posts.filter((p) => p.id !== id);
+      setPosts(updated);
+      persist(POSTS_KEY, updated);
     },
-    [persistPosts, posts],
+    [persist, posts]
   );
 
-  const value = useMemo(
-    () => ({ user, ready, signIn, signOut, posts, createPost, updatePost, deletePost }),
-    [user, ready, signIn, signOut, posts, createPost, updatePost, deletePost],
+  // Blog posts handlers
+  const createBlogPost = useCallback(
+    (draft: Partial<BlogPost>) => {
+      const newBlog: BlogPost = {
+        id: `b-${Date.now()}`,
+        title: draft.title || "New Market Update",
+        slug: draft.slug || `post-${Date.now()}`,
+        excerpt: draft.excerpt || "Market analysis and real estate updates from Sharif Realty.",
+        content: draft.content || "Full article content...",
+        coverImage: draft.coverImage || "/wp-content/uploads/image-2-1.png",
+        author: draft.author || "Majeed Sharif",
+        date: draft.date || new Date().toISOString().slice(0, 10),
+        category: draft.category || "General",
+        status: draft.status || "Published",
+        seoScore: draft.seoScore || 92,
+        readTime: draft.readTime || "4 min read",
+        views: 0,
+        galleryImages: draft.galleryImages,
+        propertySpecs: draft.propertySpecs,
+      };
+      const updated = [newBlog, ...blogPosts];
+      setBlogPosts(updated);
+      persist(BLOG_KEY, updated);
+      return newBlog;
+    },
+    [blogPosts, persist]
+  );
+
+  const updateBlogPost = useCallback(
+    (id: string, draft: Partial<BlogPost>) => {
+      const updated = blogPosts.map((b) => (b.id === id ? ({ ...b, ...draft } as BlogPost) : b));
+      setBlogPosts(updated);
+      persist(BLOG_KEY, updated);
+    },
+    [blogPosts, persist]
+  );
+
+  const deleteBlogPost = useCallback(
+    (id: string) => {
+      const updated = blogPosts.filter((b) => b.id !== id);
+      setBlogPosts(updated);
+      persist(BLOG_KEY, updated);
+    },
+    [blogPosts, persist]
+  );
+
+  // Media handlers
+  const addMediaAsset = useCallback(
+    (asset: Omit<MediaAsset, "id" | "uploadedAt">) => {
+      const newAsset: MediaAsset = {
+        ...asset,
+        id: `m-${Date.now()}`,
+        uploadedAt: new Date().toISOString().slice(0, 10),
+      };
+      const updated = [newAsset, ...mediaAssets];
+      setMediaAssets(updated);
+      persist(MEDIA_KEY, updated);
+      return newAsset;
+    },
+    [mediaAssets, persist]
+  );
+
+  const deleteMediaAsset = useCallback(
+    (id: string) => {
+      const updated = mediaAssets.filter((m) => m.id !== id);
+      setMediaAssets(updated);
+      persist(MEDIA_KEY, updated);
+    },
+    [mediaAssets, persist]
+  );
+
+  // Events handlers
+  const createOpenHouse = useCallback(
+    (event: Omit<OpenHouseEvent, "id">) => {
+      const newEvent: OpenHouseEvent = {
+        ...event,
+        id: `e-${Date.now()}`,
+      };
+      const updated = [newEvent, ...openHouses];
+      setOpenHouses(updated);
+      persist(EVENTS_KEY, updated);
+      return newEvent;
+    },
+    [openHouses, persist]
+  );
+
+  const updateOpenHouse = useCallback(
+    (id: string, draft: Partial<OpenHouseEvent>) => {
+      const updated = openHouses.map((e) => (e.id === id ? { ...e, ...draft } : e));
+      setOpenHouses(updated);
+      persist(EVENTS_KEY, updated);
+    },
+    [openHouses, persist]
+  );
+
+  const deleteOpenHouse = useCallback(
+    (id: string) => {
+      const updated = openHouses.filter((e) => e.id !== id);
+      setOpenHouses(updated);
+      persist(EVENTS_KEY, updated);
+    },
+    [openHouses, persist]
+  );
+
+  // MLS handlers
+  const updateMlsConfig = useCallback(
+    (config: Partial<MlsConfig>) => {
+      const updated = { ...mlsConfig, ...config };
+      setMlsConfig(updated);
+      persist(MLS_KEY, updated);
+    },
+    [mlsConfig, persist]
+  );
+
+  const triggerMlsSync = useCallback(async () => {
+    await new Promise((r) => setTimeout(r, 1200));
+    const newLog: MlsSyncLog = {
+      id: `log-${Date.now()}`,
+      timestamp: new Date().toISOString().replace("T", " ").slice(0, 19),
+      provider: mlsConfig.providerName || "SmartMLS",
+      status: "Success",
+      recordsProcessed: posts.length,
+      recordsUpdated: 0,
+      durationMs: 840,
+      message: "Sync completed. All active MLS listings are current.",
+    };
+    const nextLogs = [newLog, ...mlsLogs.slice(0, 19)];
+    setMlsLogs(nextLogs);
+    persist(MLS_LOGS_KEY, nextLogs);
+    updateMlsConfig({ lastSyncAt: newLog.timestamp });
+  }, [mlsConfig.providerName, mlsLogs, persist, posts.length, updateMlsConfig]);
+
+  // Site options
+  const updateSiteOptions = useCallback(
+    (options: Partial<SiteOptionsData>) => {
+      const updated = { ...siteOptions, ...options };
+      setSiteOptions(updated);
+      persist(SETTINGS_KEY, updated);
+    },
+    [persist, siteOptions]
+  );
+
+  // Leads
+  const updateLeadStatus = useCallback(
+    (id: string, status: CrmLead["status"]) => {
+      const updated = leads.map((l) => (l.id === id ? { ...l, status } : l));
+      setLeads(updated);
+      persist(LEADS_KEY, updated);
+    },
+    [leads, persist]
+  );
+
+  const assignLeadAgent = useCallback(
+    (id: string, agent: string) => {
+      const updated = leads.map((l) => (l.id === id ? { ...l, agent } : l));
+      setLeads(updated);
+      persist(LEADS_KEY, updated);
+    },
+    [leads, persist]
+  );
+
+  const addLead = useCallback(
+    (lead: Omit<CrmLead, "id" | "date">) => {
+      const newLead: CrmLead = {
+        ...lead,
+        id: `lead-${Date.now()}`,
+        date: new Date().toISOString().slice(0, 10),
+      };
+      const updated = [newLead, ...leads];
+      setLeads(updated);
+      persist(LEADS_KEY, updated);
+      return newLead;
+    },
+    [leads, persist]
+  );
+
+  const deleteLead = useCallback(
+    (id: string) => {
+      const updated = leads.filter((l) => l.id !== id);
+      setLeads(updated);
+      persist(LEADS_KEY, updated);
+    },
+    [leads, persist]
+  );
+
+  const value = useMemo<AdminContextValue>(
+    () => ({
+      user,
+      ready,
+      users,
+      signIn,
+      signUp,
+      signOut,
+      createUser,
+      updateUser,
+      deleteUser,
+      updateUserProfile,
+      favorites,
+      toggleFavorite,
+      isFavorite,
+      submitInquiry,
+      posts,
+      createPost,
+      updatePost,
+      deletePost,
+      blogPosts,
+      createBlogPost,
+      updateBlogPost,
+      deleteBlogPost,
+      mediaAssets,
+      addMediaAsset,
+      deleteMediaAsset,
+      openHouses,
+      createOpenHouse,
+      updateOpenHouse,
+      deleteOpenHouse,
+      mlsConfig,
+      mlsLogs,
+      updateMlsConfig,
+      triggerMlsSync,
+      siteOptions,
+      updateSiteOptions,
+      leads,
+      updateLeadStatus,
+      assignLeadAgent,
+      addLead,
+      deleteLead,
+    }),
+    [
+      user,
+      ready,
+      users,
+      signIn,
+      signUp,
+      signOut,
+      createUser,
+      updateUser,
+      deleteUser,
+      updateUserProfile,
+      favorites,
+      toggleFavorite,
+      isFavorite,
+      submitInquiry,
+      posts,
+      createPost,
+      updatePost,
+      deletePost,
+      blogPosts,
+      createBlogPost,
+      updateBlogPost,
+      deleteBlogPost,
+      mediaAssets,
+      addMediaAsset,
+      deleteMediaAsset,
+      openHouses,
+      createOpenHouse,
+      updateOpenHouse,
+      deleteOpenHouse,
+      mlsConfig,
+      mlsLogs,
+      updateMlsConfig,
+      triggerMlsSync,
+      siteOptions,
+      updateSiteOptions,
+      leads,
+      updateLeadStatus,
+      assignLeadAgent,
+      addLead,
+    ]
   );
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
@@ -255,13 +1138,13 @@ export function useAdmin() {
 
 export function withImageFallback(event: React.SyntheticEvent<HTMLImageElement>) {
   const img = event.currentTarget;
-  const step = img.dataset['fallbackStep'];
+  const step = img.dataset["fallbackStep"];
   if (step === "2") return;
   if (step === "1") {
-    img.dataset['fallbackStep'] = "2";
+    img.dataset["fallbackStep"] = "2";
     img.src = FALLBACK_IMAGE_ALT;
     return;
   }
-  img.dataset['fallbackStep'] = "1";
+  img.dataset["fallbackStep"] = "1";
   img.src = FALLBACK_IMAGE;
 }

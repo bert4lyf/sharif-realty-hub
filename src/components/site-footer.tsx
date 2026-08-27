@@ -1,96 +1,179 @@
 import { Link } from "@tanstack/react-router";
-import { Building2, Clock, Mail, MapPin, Phone, Shield } from "lucide-react";
+import { Clock, Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter, Shield, ArrowUpRight } from "lucide-react";
 import { FULL_ADDRESS, SITE } from "@/lib/site";
+import { OFFICIAL_MEDIA } from "@/lib/media";
 import { track } from "@/lib/analytics";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
-        <div className="space-y-4 md:col-span-2">
-          <div className="flex items-center gap-2.5">
-            <span className="flex size-9 items-center justify-center bg-accent text-accent-foreground">
-              <Building2 className="size-5" aria-hidden="true" />
-            </span>
-            <span className="font-display text-lg font-semibold">Sharif Realty</span>
+    <footer className="bg-[#0B1120] text-white border-t border-white/10">
+      {/* Top Footer Grid */}
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
+        {/* Column 1: Brand & Logo */}
+        <div className="space-y-4">
+          <Link to="/" className="inline-block bg-white p-2.5 rounded-2xl shadow-md">
+            <img
+              src={OFFICIAL_MEDIA.logo}
+              alt="Sharif Realty Group"
+              className="h-13 w-auto object-contain"
+              loading="lazy"
+            />
+          </Link>
+          <p className="text-xs leading-relaxed text-slate-300">
+            Sharif Realty Group is a premier real estate advisory specializing in bespoke luxury estates, commercial investments, and private off-market assets across Connecticut and Massachusetts.
+          </p>
+          <div className="flex items-center gap-2.5 pt-2">
+            <a
+              href={SITE.social.facebook}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Sharif Realty on Facebook"
+              className="size-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:bg-[#C5A880] hover:text-[#0F172A] transition-colors"
+            >
+              <Facebook className="size-3.5" />
+            </a>
+            <a
+              href={SITE.social.twitter}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Sharif Realty on Twitter"
+              className="size-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:bg-[#C5A880] hover:text-[#0F172A] transition-colors"
+            >
+              <Twitter className="size-3.5" />
+            </a>
+            <a
+              href={SITE.social.instagram}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Sharif Realty on Instagram"
+              className="size-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:bg-[#C5A880] hover:text-[#0F172A] transition-colors"
+            >
+              <Instagram className="size-3.5" />
+            </a>
+            <a
+              href={SITE.social.linkedin}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Sharif Realty on LinkedIn"
+              className="size-8 rounded-full bg-white/10 flex items-center justify-center text-slate-300 hover:bg-[#C5A880] hover:text-[#0F172A] transition-colors"
+            >
+              <Linkedin className="size-3.5" />
+            </a>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-primary-foreground/70">
-            A boutique South Florida brokerage led by {SITE.owner}. We price correctly, market
-            aggressively, and answer every inquiry within 15 minutes.
-          </p>
-          <p className="flex items-center gap-2 text-sm text-primary-foreground/70">
-            <Shield className="size-4 text-accent" aria-hidden="true" />
-            Licensed Florida real estate brokerage · Equal Housing Opportunity
-          </p>
         </div>
 
-        <div className="space-y-3">
-          <h2 className="rule-label text-accent">Explore</h2>
-          <ul className="space-y-2 text-sm text-primary-foreground/75">
+        {/* Column 2: Quick Links */}
+        <div>
+          <h3 className="font-serif text-sm font-bold tracking-widest text-[#C5A880] uppercase mb-4">
+            Navigation
+          </h3>
+          <ul className="space-y-2.5 text-xs text-slate-300">
             <li>
-              <Link to="/properties" className="hover:text-accent">
-                All Listings
+              <Link to="/" className="hover:text-[#C5A880] transition-colors flex items-center gap-1">
+                Home Collection
               </Link>
             </li>
             <li>
-              <Link to="/case-studies" className="hover:text-accent">
-                Case Studies
+              <Link to="/properties" className="hover:text-[#C5A880] transition-colors flex items-center gap-1">
+                Property Portfolio
               </Link>
             </li>
             <li>
-              <Link to="/faqs" className="hover:text-accent">
-                FAQs
+              <Link to="/about" className="hover:text-[#C5A880] transition-colors flex items-center gap-1">
+                About Majeed Sharif
               </Link>
             </li>
             <li>
-              <Link to="/privacy-policy" className="hover:text-accent">
-                Privacy Policy
+              <Link to="/services" className="hover:text-[#C5A880] transition-colors flex items-center gap-1">
+                Fiduciary Services
               </Link>
             </li>
             <li>
-              <Link to="/auth" className="hover:text-accent">
-                Team Login
+              <Link to="/blogs" className="hover:text-[#C5A880] transition-colors flex items-center gap-1">
+                Market Intelligence &amp; Blogs
+              </Link>
+            </li>
+            <li>
+              <Link to="/add-listing" className="hover:text-[#C5A880] transition-colors flex items-center gap-1">
+                List Your Property
               </Link>
             </li>
           </ul>
         </div>
 
+        {/* Column 3: Contact & Headquarters */}
         <div className="space-y-3">
-          <h2 className="rule-label text-accent">Contact</h2>
-          <ul className="space-y-3 text-sm text-primary-foreground/75">
-            <li>
-              <a
-                href={SITE.phoneHref}
-                className="flex items-center gap-2 hover:text-accent"
-                onClick={() => track("call_click", { location: "footer" })}
-              >
-                <Phone className="size-4 text-accent" aria-hidden="true" />
-                {SITE.phone}
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 hover:text-accent">
-                <Mail className="size-4 text-accent" aria-hidden="true" />
-                {SITE.email}
-              </a>
-            </li>
-            <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden="true" />
-              <span>{FULL_ADDRESS}</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <Clock className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden="true" />
-              <span>{SITE.hours}</span>
-            </li>
-          </ul>
+          <h3 className="font-serif text-sm font-bold tracking-widest text-[#C5A880] uppercase mb-4">
+            Headquarters
+          </h3>
+          <p className="flex items-start gap-2.5 text-xs text-slate-300">
+            <MapPin className="mt-0.5 size-3.5 shrink-0 text-[#C5A880]" />
+            <span>{FULL_ADDRESS}</span>
+          </p>
+          <p className="flex items-center gap-2.5 text-xs text-slate-300">
+            <Phone className="size-3.5 shrink-0 text-[#C5A880]" />
+            <a
+              href={SITE.phoneHref}
+              onClick={() => track("call_click", { location: "footer" })}
+              className="hover:text-[#C5A880] transition-colors font-semibold"
+            >
+              {SITE.phone}
+            </a>
+          </p>
+          <p className="flex items-center gap-2.5 text-xs text-slate-300">
+            <Mail className="size-3.5 shrink-0 text-[#C5A880]" />
+            <a href={`mailto:${SITE.email}`} className="hover:text-[#C5A880] transition-colors">
+              {SITE.email}
+            </a>
+          </p>
+          <p className="flex items-center gap-2.5 text-xs text-slate-400">
+            <Clock className="size-3.5 shrink-0 text-[#C5A880]" />
+            <span>{SITE.hours}</span>
+          </p>
+        </div>
+
+        {/* Column 4: Fiduciary Governance & Licensing */}
+        <div className="space-y-3">
+          <h3 className="font-serif text-sm font-bold tracking-widest text-[#C5A880] uppercase mb-4">
+            Licensing &amp; Trust
+          </h3>
+          <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2 text-xs text-slate-300">
+            <div className="flex items-center gap-2 text-[#C5A880] font-bold text-xs">
+              <Shield className="size-3.5" />
+              <span>State Licensed Brokerage</span>
+            </div>
+            <p className="text-[11px] text-slate-400">
+              Connecticut License: <strong>{SITE.licenses?.ct || "RES.0792184"}</strong>
+            </p>
+            <p className="text-[11px] text-slate-400">
+              Massachusetts License: <strong>{SITE.licenses?.ma || "9563211"}</strong>
+            </p>
+            <p className="text-[11px] text-slate-400 pt-1 border-t border-white/10">
+              35+ Years Proven Track Record
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="border-t border-primary-foreground/10 py-6">
-        <p className="mx-auto max-w-7xl px-4 text-xs text-primary-foreground/55 sm:px-6">
-          © {new Date().getFullYear()} Sharif Realty. All rights reserved. Listing information is
-          deemed reliable but not guaranteed and should be independently verified.
-        </p>
+      {/* Bottom Legal Bar */}
+      <div className="border-t border-white/10 bg-[#070B14] py-6 text-xs text-slate-400">
+        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+          <p>© {new Date().getFullYear()} Sharif Realty Group. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-6 text-xs text-slate-400">
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-and-conditions" className="hover:text-white transition-colors">
+              Terms &amp; Conditions
+            </Link>
+            <Link to="/contact" className="hover:text-white transition-colors">
+              Contact Advisory
+            </Link>
+            <Link to="/admin/dashboard" className="text-[#C5A880] hover:underline font-semibold">
+              Admin Portal
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

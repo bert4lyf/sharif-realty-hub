@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
-  Link,
   createRootRouteWithContext,
   useRouter,
   HeadContent,
@@ -16,6 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { StickyMobileCta } from "@/components/sticky-mobile-cta";
+import { PageLoader } from "@/components/page-loader";
 import { Analytics } from "@/components/analytics";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
@@ -62,14 +62,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Sharif Realty | Miami Luxury Homes & Commercial Space" },
+      { title: "Sharif Realty | Real Estate & Business Sales in Connecticut & Massachusetts" },
       {
         name: "description",
         content:
-          "Sharif Realty helps buyers, sellers and tenants across Miami and South Florida. Browse listings and get a reply within 15 minutes.",
+          "Sharif Realty Group: over 35 years of experience in residential, commercial, and business real estate across Connecticut and Massachusetts. Led by Majeed Sharif.",
       },
-      { name: "author", content: "Sharif Realty" },
-      { property: "og:site_name", content: "Sharif Realty" },
+      { name: "author", content: "Sharif Realty Group" },
+      { property: "og:site_name", content: "Sharif Realty Group" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -79,7 +79,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
@@ -98,11 +102,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-[#FAF8F5]">
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="bg-[#FAF8F5] text-[#1E293B] antialiased selection:bg-[#C5A880] selection:text-white">
         {children}
         <Scripts />
       </body>
@@ -118,13 +122,15 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AdminProvider>
+        {/* Logo Page Loading Animation */}
+        <PageLoader />
+
         {isBackOffice ? (
-          <div className="min-h-screen bg-background">
-            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <div className="min-h-screen bg-[#FAF8F5] dark:bg-[#0B1120]">
             <Outlet />
           </div>
         ) : (
-          <div className="flex min-h-screen flex-col pb-16 md:pb-0">
+          <div className="flex min-h-screen flex-col bg-[#FAF8F5] text-[#1E293B] pb-16 md:pb-0">
             <SiteHeader />
             <main className="flex-1">
               <Outlet />

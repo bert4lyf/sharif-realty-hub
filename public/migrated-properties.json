@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "single-family-4-bedrooms-3-baths",
+    "title": "Single family 4 bedrooms 3 baths",
+    "description": "Exclusive luxury real estate offering situated at East Hartford, Waterbury, CT. Contact Sharif Realty for private broker showing.",
+    "price": 450000,
+    "status": "for_sale",
+    "listing_type": "buy",
+    "address": "East Hartford",
+    "city": "Waterbury",
+    "state": "CT",
+    "zip": "06708",
+    "latitude": 41.554,
+    "longitude": -73.042,
+    "beds": 3,
+    "baths": 2,
+    "sqft": 2400,
+    "year_built": 2021,
+    "features": [
+      "Architectural Hardwood Floors",
+      "Chef's Gourmet Kitchen",
+      "Private Pool & Outdoor Lounge",
+      "Smart Climate Automation",
+      "Security & Private Garage"
+    ],
+    "images": [
+      "https://bert4lyf.github.io/sharifrealty-static/wp-content/uploads/16-thendara.jpg"
+    ],
+    "is_featured": true,
+    "is_archived": false
+  },
+  {
+    "slug": "commercial-property-at-north-main-st-waterbury",
+    "title": "Commercial Property At North Main St Waterbury",
+    "description": "Very nice property that has many uses, the building comes with 12 acres of land , has a church, rectory, and it’s free standing. Buildings can be used for weddings, parties, church etc. It has an industrial kitchen conference room, a main area and many private rooms. The area is zoned residential for single family homes",
+    "price": 450000,
+    "status": "for_sale",
+    "listing_type": "buy",
+    "address": "North Main St Waterbury",
+    "city": "Waterbury",
+    "state": "CT",
+    "zip": "06708",
+    "latitude": 41.554,
+    "longitude": -73.042,
+    "beds": 3,
+    "baths": 2,
+    "sqft": 2400,
+    "year_built": 2021,
+    "features": [
+      "Architectural Hardwood Floors",
+      "Chef's Gourmet Kitchen",
+      "Private Pool & Outdoor Lounge",
+      "Smart Climate Automation",
+      "Security & Private Garage"
+    ],
+    "images": [
+      "https://bert4lyf.github.io/sharifrealty-static/wp-content/uploads/IMG_4535.jpg"
+    ],
+    "is_featured": true,
+    "is_archived": false
+  },
+  {
+    "slug": "waterbury-connecticut",
+    "title": "Waterbury Connecticut",
+    "description": "Exclusive luxury real estate offering situated at Southington Ct, Waterbury, CT. Contact Sharif Realty for private broker showing.",
+    "price": 450000,
+    "status": "for_sale",
+    "listing_type": "buy",
+    "address": "Southington Ct",
+    "city": "Waterbury",
+    "state": "CT",
+    "zip": "06708",
+    "latitude": 41.554,
+    "longitude": -73.042,
+    "beds": 3,
+    "baths": 2,
+    "sqft": 2400,
+    "year_built": 2021,
+    "features": [
+      "Architectural Hardwood Floors",
+      "Chef's Gourmet Kitchen",
+      "Private Pool & Outdoor Lounge",
+      "Smart Climate Automation",
+      "Security & Private Garage"
+    ],
+    "images": [
+      "https://bert4lyf.github.io/sharifrealty-static/wp-content/uploads/image-16.png"
+    ],
+    "is_featured": true,
+    "is_archived": false
+  }
+]

@@ -14,11 +14,17 @@ function AdminLayout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ready && !user) void navigate({ to: "/login", replace: true });
+    if (ready) {
+      if (!user) {
+        void navigate({ to: "/login", replace: true });
+      } else if (user.role === "Client") {
+        void navigate({ to: "/dashboard", replace: true });
+      }
+    }
   }, [ready, user, navigate]);
 
-  if (!ready || !user) {
-    return <div className="px-6 py-16 text-sm text-muted-foreground">Checking your session…</div>;
+  if (!ready || !user || user.role === "Client") {
+    return <div className="px-6 py-16 text-sm text-slate-500">Checking permissions &amp; authenticating session…</div>;
   }
 
   return (

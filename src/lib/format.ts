@@ -1,11 +1,7 @@
-export function formatPrice(value: number, isRental = false) {
-  const formatted = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(value);
-  return isRental ? `${formatted}/mo` : formatted;
+export function formatPrice(_value?: number, _isRental = false) {
+  return "";
 }
+
 
 export function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US").format(value);

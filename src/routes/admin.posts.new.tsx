@@ -1,31 +1,29 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { AdminPageHeader } from "@/components/admin/wp-shell";
-import { PostForm } from "@/components/admin/post-form";
+import { PropertyEditor } from "@/components/admin/property-editor";
 import { useAdmin } from "@/lib/admin-store";
 
 export const Route = createFileRoute("/admin/posts/new")({
-  component: NewPostPage,
+  component: NewPropertyPage,
 });
 
-function NewPostPage() {
+function NewPropertyPage() {
   const { createPost } = useAdmin();
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className="space-y-6">
       <AdminPageHeader
-        title="Add New Property"
-        description="Create a property post with full listing details."
+        title="Add New Property Listing"
+        description="WpEstate CRM · Publish high-resolution luxury listings and off-market opportunities."
       />
-      <PostForm
-        onSubmit={(draft) => {
-          createPost(draft);
-          toast.success("Property published");
+      <PropertyEditor
+        onSave={async (values) => {
+          createPost(values);
           void navigate({ to: "/admin/dashboard" });
         }}
         onCancel={() => void navigate({ to: "/admin/dashboard" })}
       />
-    </>
+    </div>
   );
 }

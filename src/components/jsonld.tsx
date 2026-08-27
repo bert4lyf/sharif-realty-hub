@@ -45,9 +45,9 @@ export function localBusinessJsonLd() {
 }
 
 export function reviewsJsonLd(
-  reviews: { author_name: string; rating: number; quote: string }[],
+  reviews: { author_name: string; rating: number; quote: string }[] = [],
 ) {
-  if (reviews.length === 0) return null;
+  if (!reviews || reviews.length === 0) return null;
   const average = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
   return {
     "@context": "https://schema.org",
@@ -68,8 +68,8 @@ export function reviewsJsonLd(
   };
 }
 
-export function faqJsonLd(faqs: { question: string; answer: string }[]) {
-  if (faqs.length === 0) return null;
+export function faqJsonLd(faqs: { question: string; answer: string }[] = []) {
+  if (!faqs || faqs.length === 0) return null;
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",

@@ -1,46 +1,44 @@
-import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
-import { toast } from "sonner";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AdminPageHeader } from "@/components/admin/wp-shell";
-import { PostForm } from "@/components/admin/post-form";
+import { PropertyEditor } from "@/components/admin/property-editor";
 import { useAdmin } from "@/lib/admin-store";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/admin/posts/$id/edit")({
-  component: EditPostPage,
+  component: EditPropertyPage,
 });
 
-function EditPostPage() {
-  const { id } = useParams({ from: "/admin/posts/$id/edit" });
+function EditPropertyPage() {
+  const { id } = Route.useParams();
   const { posts, updatePost } = useAdmin();
   const navigate = useNavigate();
-  const post = posts.find((item) => item.id === id);
 
-  if (!post) {
+  const property = posts.find((p) => p.id === id);
+
+  if (!property) {
     return (
-      <>
-        <AdminPageHeader title="Post not found" description="This post may have been deleted." />
-        <button
-          type="button"
-          className="text-sm font-semibold text-accent hover:underline"
-          onClick={() => void navigate({ to: "/admin/dashboard" })}
-        >
-          Back to All Posts
-        </button>
-      </>
+      <div className="rounded-xl border border-slate-200 bg-white p-12 text-center space-y-4">
+        <h2 className="font-display text-xl font-bold">Property Not Found</h2>
+        <p className="text-sm text-slate-500">The property you are trying to edit does not exist or was removed.</p>
+        <Button onClick={() => void navigate({ to: "/admin/dashboard" })}>Return to Properties</Button>
+      </div>
     );
   }
 
   return (
-    <>
-      <AdminPageHeader title="Edit Property" description={post.address || post.title} />
-      <PostForm
-        post={post}
-        onSubmit={(draft) => {
-          updatePost(post.id, draft);
-          toast.success("Property updated");
+    <div className="space-y-6">
+      <AdminPageHeader
+        title={`Edit Property: ${property.title}`}
+        description={`WpEstate CRM · ID: ${property.id} · MLS #${property.mlsId || "N/A"}`}
+      />
+      <PropertyEditor
+        property={property}
+        onSave={async (values) => {
+          updatePost(property.id, values);
           void navigate({ to: "/admin/dashboard" });
         }}
         onCancel={() => void navigate({ to: "/admin/dashboard" })}
       />
-    </>
+    </div>
   );
 }

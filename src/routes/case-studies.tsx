@@ -91,8 +91,8 @@ function CaseStudiesPage() {
               <dl className="grid grid-cols-2 gap-4 self-start rounded-sm bg-muted/60 p-5 md:grid-cols-1">
                 {study.sale_price !== null && (
                   <div>
-                    <dt className="text-xs text-muted-foreground">Sold price</dt>
-                    <dd className="font-display text-xl">{formatPrice(Number(study.sale_price))}</dd>
+                    <dt className="text-xs text-muted-foreground">Transaction Status</dt>
+                    <dd className="font-display text-xl text-[#B38B59]">Sold / Confidential</dd>
                   </div>
                 )}
                 {study.days_on_market !== null && (

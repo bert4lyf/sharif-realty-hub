@@ -8,17 +8,17 @@ import { OFFICIAL_MEDIA } from "@/lib/media";
 export const Route = createFileRoute("/list-your-property")({
   head: () => ({
     meta: [
-      { title: "List Your Property | Sharif Realty Group LLC, Waterbury CT" },
+      { title: "List Your Property | Sharif Realty Group LLC · CT & MA" },
       {
         name: "description",
         content:
-          "List your Waterbury, Berlin or Wolcott property with Majeed Sharif of Sharif Realty Group LLC. Free pricing opinion and a response within 15 minutes.",
+          "List your Connecticut or Massachusetts property with Majeed Sharif of Sharif Realty Group LLC. Licensed in two states: Connecticut and Massachusetts. Free pricing opinion and a response within 15 minutes.",
       },
-      { property: "og:title", content: "List Your Connecticut Property with Sharif Realty Group" },
+      { property: "og:title", content: "List Your Property with Sharif Realty Group · CT & MA" },
       {
         property: "og:description",
         content:
-          "Free written pricing opinion, off-market buyer network and full transaction management across Waterbury, Berlin and Wolcott, CT.",
+          "Free written pricing opinion, off-market buyer network and full transaction management across Connecticut and Massachusetts.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/list-your-property")({
 const STEPS = [
   {
     title: "Walkthrough and pricing opinion",
-    body: "Majeed visits the property, photographs condition notes and prepares a written opinion of value built on closed Waterbury, Berlin and Wolcott comparables.",
+    body: "Majeed visits the property, photographs condition notes and prepares a written opinion of value built on closed Connecticut and Massachusetts comparables.",
   },
   {
     title: "Off-market first, then MLS",
@@ -103,9 +103,19 @@ function ListYourProperty() {
               WhatsApp Majeed
             </a>
           </div>
+
+          <div className="mt-6 p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Self-Service Listing Submission</p>
+              <p className="text-sm font-semibold text-slate-900 dark:text-white">Have an account? Submit & manage your listing directly.</p>
+            </div>
+            <a href="/sign-in" className="inline-flex items-center px-4 py-2 rounded-lg bg-[#0F172A] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#1E293B] transition-colors whitespace-nowrap">
+              Sign In / Register &rarr;
+            </a>
+          </div>
         </div>
 
-        <aside id="request-info" className="h-fit border border-border bg-card p-6">
+        <aside id="request-info" className="h-fit border border-border bg-card p-6 rounded-2xl shadow-sm">
           <h2 className="font-display text-xl">Request a listing appointment</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Tell us the address and we will reply with a pricing range the same day.

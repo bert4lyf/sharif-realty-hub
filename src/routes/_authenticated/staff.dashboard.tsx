@@ -39,13 +39,11 @@ import type { Property } from "@/lib/types";
 export const Route = createFileRoute("/_authenticated/staff/dashboard")({
   head: () => ({
     meta: [
-      { title: "Admin Dashboard | Sharif Realty" },
-      { name: "description", content: "Manage Sharif Realty listings, leads, reviews and settings." },
+      { title: "Super Admin Dashboard | Sharif Realty" },
+      { name: "description", content: "Super Administrator low-level database control room." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Admin Dashboard | Sharif Realty" },
-      { property: "og:description", content: "Internal Sharif Realty management console." },
+      { property: "og:title", content: "Super Admin Dashboard | Sharif Realty" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AdminDashboard,
@@ -67,29 +65,23 @@ function AdminDashboard() {
   const refresh = () => void queryClient.invalidateQueries({ queryKey: ["admin", "overview"] });
 
   if (accessQuery.isLoading) {
-    return <div className="px-4 py-24 text-center text-sm text-muted-foreground">Loading dashboard…</div>;
+    return <div className="px-4 py-24 text-center text-sm text-muted-foreground">Loading Super Admin console…</div>;
   }
 
   if (!accessQuery.data?.isStaff) {
     return (
       <div className="mx-auto max-w-lg px-4 py-24 text-center">
-        <ShieldCheck className="mx-auto size-8 text-accent" aria-hidden="true" />
-        <h1 className="mt-4 font-display text-2xl">Access pending</h1>
+        <ShieldCheck className="mx-auto size-8 text-amber-500" aria-hidden="true" />
+        <h1 className="mt-4 font-display text-2xl">Super Admin Access Pending</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Your account ({accessQuery.data?.email}) has no staff role yet. Ask a Sharif Realty
-          administrator to grant you Admin or Agent access.
+          Your account ({accessQuery.data?.email}) requires Super Admin authorization.
         </p>
-        <div className="mt-6 flex justify-center gap-2">
+        <div className="mt-6 flex justify-center gap-3">
+          <Button variant="outline" asChild>
+            <Link to="/admin/dashboard">Go to Admin Console</Link>
+          </Button>
           <Button variant="secondary" asChild>
             <Link to="/">Back to site</Link>
-          </Button>
-          <Button
-            onClick={async () => {
-              await supabase.auth.signOut();
-              await navigate({ to: "/auth" });
-            }}
-          >
-            Sign out
           </Button>
         </div>
       </div>
@@ -101,27 +93,41 @@ function AdminDashboard() {
 
   return (
     <>
-      <Breadcrumbs items={[{ label: "Admin" }, { label: "Dashboard" }]} />
-      <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
+      <Breadcrumbs items={[{ label: "Super Admin" }, { label: "Control Room" }]} />
+      <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
+        <div className="flex flex-wrap items-start justify-between gap-4 p-6 bg-slate-900 text-white rounded-xl shadow-lg border border-slate-800">
           <div>
-            <p className="eyebrow text-accent">
-              {me.isSuperAdmin ? "Super Admin" : me.isAdmin ? "Administrator" : "Agent"}
-            </p>
-            <h1 className="mt-2 font-display text-3xl">Sharif Realty control room</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Signed in as {me.email}</p>
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/40">
+                Super Admin Console
+              </span>
+              <span className="text-xs text-slate-400">Low-Level System & Database Engine</span>
+            </div>
+            <h1 className="mt-2 font-display text-2xl sm:text-3xl text-white">
+              Sharif Realty System Control Room
+            </h1>
+            <p className="mt-1 text-xs text-slate-300">Signed in as <strong>{me.email}</strong></p>
           </div>
-          <Button
-            variant="secondary"
-            onClick={async () => {
-              await supabase.auth.signOut();
-              queryClient.clear();
-              await navigate({ to: "/auth" });
-            }}
-          >
-            <LogOut className="size-4" aria-hidden="true" />
-            Sign out
-          </Button>
+
+          <div className="flex items-center gap-2">
+            <Button asChild className="bg-[#DC2626] hover:bg-[#B91C1C] text-white font-bold text-xs shadow-md">
+              <Link to="/admin/dashboard">
+                Open Standard Admin Console →
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="border-slate-700 text-white hover:bg-slate-800 text-xs"
+              onClick={async () => {
+                await supabase.auth.signOut();
+                queryClient.clear();
+                await navigate({ to: "/auth" });
+              }}
+            >
+              <LogOut className="size-3.5 mr-1" aria-hidden="true" />
+              Sign out
+            </Button>
+          </div>
         </div>
 
         {!data ? (
