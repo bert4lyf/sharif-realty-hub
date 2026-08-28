@@ -21,6 +21,7 @@ dist-ssr
 .env.local
 database/ADMIN_CREDENTIALS.md
 *.zip
+static-site/
 
 # Wrangler / Cloudflare
 .wrangler/
