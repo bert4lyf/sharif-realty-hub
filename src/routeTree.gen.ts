@@ -49,6 +49,7 @@ import { Route as AdminPostsRouteImport } from './routes/admin.posts'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminTagsRouteImport } from './routes/admin.tags'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
 import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
 import { Route as PropertiesIndexRouteImport } from './routes/properties.index'
 import { Route as PropertiesIdRouteImport } from './routes/properties.$id'
@@ -255,6 +256,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AdminRoute,
 } as any)
+const BlogsIndexRoute = BlogsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogsRoute,
+} as any)
 const BlogsSlugRoute = BlogsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -329,6 +335,7 @@ export interface FileRoutesByFullPath {
   '/blogs/$slug': typeof BlogsSlugRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/blogs/': typeof BlogsIndexRoute
   '/properties/': typeof PropertiesIndexRoute
   '/staff/dashboard': typeof AuthenticatedStaffDashboardRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
@@ -343,7 +350,6 @@ export interface FileRoutesByTo {
   '/add-listing': typeof AddListingRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
-  '/blogs': typeof BlogsRouteWithChildren
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/contact-form': typeof ContactFormRoute
@@ -375,6 +381,7 @@ export interface FileRoutesByTo {
   '/blogs/$slug': typeof BlogsSlugRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin': typeof AdminIndexRoute
+  '/blogs': typeof BlogsIndexRoute
   '/properties': typeof PropertiesIndexRoute
   '/staff/dashboard': typeof AuthenticatedStaffDashboardRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
@@ -424,6 +431,7 @@ export interface FileRoutesById {
   '/blogs/$slug': typeof BlogsSlugRoute
   '/properties/$id': typeof PropertiesIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/blogs/': typeof BlogsIndexRoute
   '/properties/': typeof PropertiesIndexRoute
   '/_authenticated/staff/dashboard': typeof AuthenticatedStaffDashboardRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
@@ -473,6 +481,7 @@ export interface FileRouteTypes {
     | '/blogs/$slug'
     | '/properties/$id'
     | '/admin/'
+    | '/blogs/'
     | '/properties/'
     | '/staff/dashboard'
     | '/admin/posts/new'
@@ -487,7 +496,6 @@ export interface FileRouteTypes {
     | '/add-listing'
     | '/auth'
     | '/blog'
-    | '/blogs'
     | '/case-studies'
     | '/contact'
     | '/contact-form'
@@ -519,6 +527,7 @@ export interface FileRouteTypes {
     | '/blogs/$slug'
     | '/properties/$id'
     | '/admin'
+    | '/blogs'
     | '/properties'
     | '/staff/dashboard'
     | '/admin/posts/new'
@@ -567,6 +576,7 @@ export interface FileRouteTypes {
     | '/blogs/$slug'
     | '/properties/$id'
     | '/admin/'
+    | '/blogs/'
     | '/properties/'
     | '/_authenticated/staff/dashboard'
     | '/admin/posts/new'
@@ -885,6 +895,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/blogs/': {
+      id: '/blogs/'
+      path: '/'
+      fullPath: '/blogs/'
+      preLoaderRoute: typeof BlogsIndexRouteImport
+      parentRoute: typeof BlogsRoute
+    }
     '/blogs/$slug': {
       id: '/blogs/$slug'
       path: '/$slug'
@@ -995,10 +1012,12 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface BlogsRouteChildren {
   BlogsSlugRoute: typeof BlogsSlugRoute
+  BlogsIndexRoute: typeof BlogsIndexRoute
 }
 
 const BlogsRouteChildren: BlogsRouteChildren = {
   BlogsSlugRoute: BlogsSlugRoute,
+  BlogsIndexRoute: BlogsIndexRoute,
 }
 
 const BlogsRouteWithChildren = BlogsRoute._addFileChildren(BlogsRouteChildren)
