@@ -32,6 +32,7 @@ import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { useAdmin } from "@/lib/admin-store";
+import { SEED_BLOG_POSTS_DATA } from "@/lib/database-seed";
 import { PropertyCard } from "@/components/property-card";
 import { SITE, whatsappHref } from "@/lib/site";
 import { Button } from "@/components/ui/button";
@@ -53,7 +54,9 @@ export const Route = createFileRoute("/blogs/$slug")({
 
 export function SingleBlogPage() {
   const { slug } = Route.useParams();
-  const { blogPosts, posts } = useAdmin();
+  const admin = useAdmin();
+  const blogPosts = admin?.blogPosts && admin.blogPosts.length > 0 ? admin.blogPosts : SEED_BLOG_POSTS_DATA;
+  const posts = admin?.posts && admin.posts.length > 0 ? admin.posts : [];
 
   // Active image index in gallery carousel
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -78,10 +81,9 @@ export function SingleBlogPage() {
   const [sendingInquiry, setSendingInquiry] = useState(false);
 
   // Find post in admin store or seed
-  const currentIndex = blogPosts.findIndex((p) => p.slug === slug || p.id === slug);
-  const post: BlogPost | undefined = currentIndex !== -1 ? blogPosts[currentIndex] : blogPosts[0];
-
-  if (!post) throw notFound();
+  const cleanSlug = typeof slug === "string" ? slug.replace(/\/index\.html$/, "") : "";
+  const currentIndex = blogPosts.findIndex((p) => p.slug === cleanSlug || p.id === cleanSlug || p.slug === slug || p.id === slug);
+  const post: BlogPost = (currentIndex !== -1 ? blogPosts[currentIndex] : blogPosts[0]) || SEED_BLOG_POSTS_DATA[0];
 
   // Navigation Prev / Next
   const prevPost =

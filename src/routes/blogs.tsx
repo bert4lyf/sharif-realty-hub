@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { useAdmin } from "@/lib/admin-store";
+import { SEED_BLOG_POSTS_DATA } from "@/lib/database-seed";
 
 export const Route = createFileRoute("/blogs")({
   head: () => ({
@@ -28,14 +29,15 @@ export const Route = createFileRoute("/blogs")({
 const DEFAULT_BLOG_IMAGE = "/wp-content/themes/wpresidence/img/defaults/default_property_listings.jpg";
 
 export function BlogPage() {
-  const { blogPosts } = useAdmin();
+  const admin = useAdmin();
+  const blogPosts = admin?.blogPosts && admin.blogPosts.length > 0 ? admin.blogPosts : SEED_BLOG_POSTS_DATA;
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
   // Dynamic categories extracted from live blogPosts
   const categories = useMemo(() => {
     const set = new Set<string>(["All"]);
     blogPosts.forEach((b) => {
-      if (b.category) set.add(b.category);
+      if (b?.category) set.add(b.category);
     });
     return Array.from(set);
   }, [blogPosts]);
@@ -43,7 +45,7 @@ export function BlogPage() {
   const filtered = useMemo(() => {
     if (activeCategory === "All") return blogPosts;
     return blogPosts.filter(
-      (p) => p.category?.toLowerCase() === activeCategory.toLowerCase(),
+      (p) => p?.category?.toLowerCase() === activeCategory.toLowerCase(),
     );
   }, [blogPosts, activeCategory]);
 
@@ -100,8 +102,9 @@ export function BlogPage() {
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
                 className="card-lift group flex flex-col justify-between overflow-hidden rounded-2xl border border-[#EAE6DF] bg-white shadow-sm hover:border-[#C5A880]"
               >
-                <a
-                  href={`/${post.slug}/index.html`}
+                <Link
+                  to="/blogs/$slug"
+                  params={{ slug: post.slug }}
                   className="flex flex-col h-full justify-between focus:outline-none"
                 >
                   <div>
@@ -148,7 +151,7 @@ export function BlogPage() {
                       {post.readTime || "3 min read"}
                     </span>
                   </div>
-                </a>
+                </Link>
               </motion.article>
             );
           })}

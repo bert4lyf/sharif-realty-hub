@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { FULL_ADDRESS, SITE } from "@/lib/site";
+import { FULL_ADDRESS, SITE, googleMapsUrl } from "@/lib/site";
 import { useAdmin } from "@/lib/admin-store";
 import { PropertyCard } from "@/components/property-card";
 import type { Property } from "@/lib/types";
@@ -284,7 +284,7 @@ export function ContactPage() {
                     <MapPin className="size-5 text-[#B38B59] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Office Address</span>
-                      <p className="font-semibold text-slate-900">3125 North Main St, Waterbury, CT 06704.</p>
+                      <p className="font-semibold text-slate-900">{FULL_ADDRESS}</p>
                     </div>
                   </div>
 
@@ -292,7 +292,7 @@ export function ContactPage() {
                     <Phone className="size-5 text-[#B38B59] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Direct Phone</span>
-                      <a href="tel:2038028099" className="font-serif text-base font-bold text-[#0F172A] hover:text-[#B38B59]">
+                      <a href={SITE.phoneHref} className="font-serif text-base font-bold text-[#0F172A] hover:text-[#B38B59]">
                         +1 (203) 802-8099
                       </a>
                     </div>
@@ -302,8 +302,8 @@ export function ContactPage() {
                     <Mail className="size-5 text-[#B38B59] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Email</span>
-                      <a href="mailto:SharifRealty19@gmail.com" className="font-semibold text-slate-900 hover:text-[#B38B59]">
-                        SharifRealty19@gmail.com
+                      <a href={`mailto:${SITE.email}`} className="font-semibold text-slate-900 hover:text-[#B38B59]">
+                        {SITE.email}
                       </a>
                     </div>
                   </div>
@@ -312,12 +312,12 @@ export function ContactPage() {
                     <Clock className="size-5 text-[#B38B59] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Office Hours</span>
-                      <p className="font-semibold text-slate-900">Mon-Fri: 9:00 AM - 6:00 PM</p>
+                      <p className="font-semibold text-slate-900">{SITE.hours}</p>
                     </div>
                   </div>
                 </div>
 
-                {/* Google Maps Embed for 3125 North Main St Waterbury CT */}
+                {/* Google Maps Embed for 96 Beach Rd Wolcott CT */}
                 <div className="overflow-hidden rounded-2xl border border-[#EAE6DF] aspect-[16/10] bg-slate-100 shadow-sm">
                   <iframe
                     title="Sharif Realty Office Location"
@@ -327,7 +327,7 @@ export function ContactPage() {
                     loading="lazy"
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2984.887640248231!2d-73.04169722346614!3d41.57169888456102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e7c00e1cf3e7ef%3A0x446e16ad71597f80!2s3125%20N%20Main%20St%2C%20Waterbury%2C%20CT%2006704!5e0!3m2!1sen!2sus!4v1700000000000"
+                    src={googleMapsUrl(FULL_ADDRESS)}
                   />
                 </div>
               </div>

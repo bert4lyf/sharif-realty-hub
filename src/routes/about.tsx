@@ -23,7 +23,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Button } from "@/components/ui/button";
-import { SITE, whatsappHref } from "@/lib/site";
+import { FULL_ADDRESS, SITE, whatsappHref } from "@/lib/site";
 import { OFFICIAL_MEDIA } from "@/lib/media";
 import { useAdmin, withImageFallback } from "@/lib/admin-store";
 import { PropertyCard } from "@/components/property-card";
@@ -85,7 +85,7 @@ const FAQS = [
   },
   {
     q: "How do I schedule a confidential consultation with Majeed Sharif?",
-    a: "You can call our direct office line at +1 (203) 802-8099, email SharifRealty19@gmail.com, or use our online contact form to book a private consultation at our headquarters at 3125 North Main St, Waterbury, CT.",
+    a: "You can call our direct office line at +1 (203) 802-8099, email SharifRealty19@gmail.com, or use our online contact form to book a private consultation at our office at 96 Beach Rd, Wolcott, CT.",
   },
 ];
 
@@ -239,7 +239,7 @@ export function AboutPage() {
                     </div>
                     <div className="flex items-center justify-center gap-2">
                       <MapPin className="size-3.5 text-[#C5A880]" />
-                      <span>3125 North Main St, Waterbury, CT 06704</span>
+                      <span>{FULL_ADDRESS}</span>
                     </div>
                   </div>
 

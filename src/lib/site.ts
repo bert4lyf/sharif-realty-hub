@@ -12,12 +12,13 @@ export const SITE = {
   whatsapp: "12038028099",
   email: "SharifRealty19@gmail.com",
   address: {
-    street: "3125 North Main St",
-    city: "Waterbury",
+    street: "96 Beach Rd",
+    city: "Wolcott",
     region: "CT",
-    postalCode: "06704",
+    postalCode: "06716",
   },
   locations: [
+    "Wolcott, CT 06716",
     "Waterbury, CT 06704",
     "Berlin, CT 06037",
     "Southington, CT",
@@ -25,8 +26,8 @@ export const SITE = {
     "Stamford, CT",
     "Hartford, CT",
   ],
-  zipsServed: ["06704", "06710", "06037", "06103", "06902"],
-  geo: { lat: 41.5835, lng: -73.0368 },
+  zipsServed: ["06716", "06704", "06710", "06037", "06103", "06902"],
+  geo: { lat: 41.6015, lng: -72.9868 },
   hours: "Mon-Fri: 9:00 AM - 6:00 PM",
   experience: "35+ years in residential, commercial, and business real estate",
   social: {
@@ -60,7 +61,7 @@ export const whatsappHref = (
 export const directionsHref = (destination = FULL_ADDRESS) =>
   `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
 
-export const googleMapsUrl = (query = "3125 North Main St Waterbury Ct 06704") =>
+export const googleMapsUrl = (query = "96 Beach Rd Wolcott CT 06716") =>
   `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=m&z=14&output=embed&iwloc=near`;
 
 export const mapEmbedSrc = (lat: number, lng: number) =>

@@ -156,42 +156,42 @@ const BLOGS_DATA = [
     title: "Off Market 4 bed 3 bath 1,724sqft 1,724 square feet 12 Rockledge Dr, Berlin, CT 06037",
     date: "January 25, 2026",
     image: DEFAULT_BLOG_IMAGE,
-    link: "/off-market-4-bed-3-bath-1724sqft-1724-square-fe/index.html",
+    link: "/blogs/off-market-4-bed-3-bath-1724sqft-1724-square-fe",
   },
   {
     id: "b2",
     title: "Off Market 2 bed 2.5 bath 1,400sqft 1,400 square feet 270 New Britain Rd Unit 20, Berlin, CT 06037",
     date: "January 25, 2026",
     image: DEFAULT_BLOG_IMAGE,
-    link: "/off-market-2-bed-2-5-bath-1400sqft-1400-square-/index.html",
+    link: "/blogs/off-market-2-bed-2-5-bath-1400sqft-1400-square-",
   },
   {
     id: "b3",
     title: "Off Market 4 bed 2.5 bath 3,239sqft 3,239 square feet 5 Shire Way, Burlington, CT 06013",
     date: "January 25, 2026",
     image: DEFAULT_BLOG_IMAGE,
-    link: "/off-market-4-bed-2-5-bath-3239sqft-3239-square-/index.html",
+    link: "/blogs/off-market-4-bed-2-5-bath-3239sqft-3239-square-",
   },
   {
     id: "b4",
     title: "Off Market 3 bed 3 bath 1,184sqft 1,184 square feet 1205 Farmington Ave, Berlin, CT 06037",
     date: "January 25, 2026",
     image: DEFAULT_BLOG_IMAGE,
-    link: "/off-market-3-bed-3-bath-1184sqft-1184-square-fe/index.html",
+    link: "/blogs/off-market-3-bed-3-bath-1184sqft-1184-square-fe",
   },
   {
     id: "b5",
     title: "Update on Prime Market Trends & Off-Market Listings",
     date: "January 21, 2026",
     image: DEFAULT_BLOG_IMAGE,
-    link: "/update/index.html",
+    link: "/blogs/update",
   },
   {
     id: "b6",
     title: "Latest News & Economic Insights From NAR",
     date: "December 26, 2025",
     image: DEFAULT_BLOG_IMAGE,
-    link: "/latest-news-from-nar-2/index.html",
+    link: "/blogs/latest-news-from-nar-2",
   },
 ];
 
@@ -309,10 +309,10 @@ export function HomePage() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0, scale: 1.06 }}
+            initial={{ opacity: 0, scale: 1.04 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 1.0, ease: "easeOut" }}
             className="absolute inset-0 size-full"
             style={{
               transform: `translateY(${scrollY * 0.15}px)`,
@@ -324,42 +324,42 @@ export function HomePage() {
               className="size-full object-cover object-center"
               fetchPriority="high"
             />
-            {/* Elegant Allys Dark Gradient Scrim */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/50 to-[#0F172A]/75" />
+            {/* Ultra-clear gradient scrim for maximum image clarity and sharpness */}
+            <div className="absolute inset-0 bg-black/15 bg-gradient-to-t from-black/50 via-transparent to-black/25" />
           </motion.div>
         </AnimatePresence>
 
-        {/* Hero Text Overlay */}
+        {/* Hero Text Overlay (Transparent container so pictures are completely clear) */}
         <div className="relative z-20 mx-auto w-full max-w-5xl px-4 text-center text-white sm:px-6">
           <motion.div
             key={`text-${currentSlide}`}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-4"
+            className="space-y-4 py-4"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#0F172A]/70 px-4 py-1.5 backdrop-blur-md">
-              <Sparkles className="size-3.5 text-[#C5A880]" />
-              <span className="text-[11px] font-semibold uppercase tracking-widest text-[#C5A880]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/40 px-4 py-1.5 backdrop-blur-md shadow-sm">
+              <Sparkles className="size-3.5 text-[#E5CCA8]" />
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-[#E5CCA8] drop-shadow-sm">
                 Sharif Realty Group · Connecticut &amp; Massachusetts
               </span>
             </div>
 
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.14]">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.14] drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
               {activeSlide.title}
-              <span className="block text-[#C5A880] mt-1 font-serif italic font-normal">
+              <span className="block text-[#E5CCA8] mt-1 font-serif italic font-normal drop-shadow-[0_4px_14px_rgba(0,0,0,0.9)]">
                 {activeSlide.subtitle}
               </span>
             </h1>
 
-            <p className="mx-auto max-w-2xl text-sm sm:text-base text-slate-200 font-normal leading-relaxed">
+            <p className="mx-auto max-w-2xl text-sm sm:text-base text-slate-100 font-medium leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
               {activeSlide.tagline}
             </p>
 
             <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
               <Button
                 asChild
-                className="h-12 bg-[#C5A880] hover:bg-[#B39369] text-[#0F172A] px-8 text-sm font-bold uppercase tracking-wider shadow-xl transition-transform hover:scale-105 rounded-xl cursor-pointer"
+                className="h-12 bg-[#C5A880] hover:bg-[#B39369] text-[#0F172A] px-8 text-sm font-bold uppercase tracking-wider shadow-2xl transition-transform hover:scale-105 rounded-xl cursor-pointer"
               >
                 <Link to="/properties">
                   View All Listings <ArrowRight className="size-4 ml-2" />
@@ -368,10 +368,10 @@ export function HomePage() {
 
               <Button
                 asChild
-                className="h-12 border border-white/30 bg-white/10 hover:bg-white text-white hover:text-[#0F172A] px-7 text-sm font-semibold backdrop-blur-md rounded-xl cursor-pointer transition-all"
+                className="h-12 border border-white/60 bg-black/40 hover:bg-white text-white hover:text-[#0F172A] px-7 text-sm font-semibold backdrop-blur-md rounded-xl cursor-pointer transition-all shadow-xl"
               >
                 <Link to="/contact">
-                  <Phone className="size-4 mr-2 text-[#C5A880]" />
+                  <Phone className="size-4 mr-2 text-[#E5CCA8]" />
                   Direct Consultation
                 </Link>
               </Button>
@@ -960,8 +960,8 @@ export function HomePage() {
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
                 className="card-lift group flex flex-col justify-between overflow-hidden rounded-2xl border border-[#EAE6DF] bg-white shadow-sm hover:border-[#C5A880]"
               >
-                <a
-                  href={post.link}
+                <Link
+                  to={post.link}
                   className="flex flex-col h-full justify-between focus:outline-none"
                 >
                   <div>
@@ -1004,14 +1004,14 @@ export function HomePage() {
                       3 min read
                     </span>
                   </div>
-                </a>
+                </Link>
               </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 9. GET IN TOUCH & HEADQUARTERS MAP SECTION */}
+      {/* 9. GET IN TOUCH & OFFICE LOCATION MAP */}
       <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
           {/* Left Form */}
@@ -1125,7 +1125,7 @@ export function HomePage() {
             <div className="h-[460px] w-full rounded-xl overflow-hidden">
               <iframe
                 title="Sharif Realty Office Map"
-                src={googleMapsUrl("New Britain Rd #20 Berlin 06037")}
+                src={googleMapsUrl(FULL_ADDRESS)}
                 className="size-full border-0"
                 loading="lazy"
               />

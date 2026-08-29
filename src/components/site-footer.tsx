@@ -169,9 +169,6 @@ export function SiteFooter() {
             <Link to="/contact" className="hover:text-white transition-colors">
               Contact Advisory
             </Link>
-            <Link to="/admin/dashboard" className="text-[#C5A880] hover:underline font-semibold">
-              Admin Portal
-            </Link>
           </div>
         </div>
       </div>
